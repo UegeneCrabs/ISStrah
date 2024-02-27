@@ -1,0 +1,195 @@
+{% extends 'layout.html' %}
+
+
+{% load static %}
+
+
+{% block styles %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <style>
+
+        body {
+            font-family: "Montserrat", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background:url("{% static 'img/Pattern4.png' %}");
+        }
+
+        /* Стили для формы */
+        form {
+            width: 400px;
+            max-width: 500px; /* Ширина формы */
+            margin: 0 auto; /* Центрирование по горизонтали */
+            padding: 35px; /* Отступы вокруг содержимого формы */
+            border-radius: 25px; /* Закругление углов формы */
+            background-color: #e1e4f5; /* Цвет фона формы */
+            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+            border: #d4dcfa 1px solid;
+        }
+
+        /* Стили для текстовых полей и меток */
+        .input-group {
+            margin-bottom: 20px; /* Отступ между группами элементов */
+        }
+
+        .input-group label {
+            display: block; /* Размещаем метку на отдельной строке */
+            color: #000000;
+            font-size: 1rem;;
+            margin-bottom: 5px;
+        }
+
+        .input-group input[type="text"],
+        .input-group input[type="email"],
+        .input-group input[type="password"] {
+            width: calc(100% - 35px); /* Ширина поля ввода (вычисляемая, минус отступы) */
+            padding: 10px; /* Внутренние отступы текстовых полей */
+            border-radius: 5px; /* Закругление углов текстовых полей */
+            border: 0; /* Границы текстовых полей */
+            background-color: #ffffff;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.875rem;
+            color: #000000;
+        }
+
+        /* Стили для кнопки */
+        .button-center {
+            text-align: center; /* Выравнивание кнопки по центру */
+            margin-top: 40px;
+        }
+
+        button {
+            background: #4154f1;
+            padding: 8px 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .hr-line {
+            margin: 32px 20px;
+            border-right: none;
+            border-bottom: none;
+            border-left: none;
+            border-image: initial;
+            border-top: 1px solid rgb(163, 193, 245);
+        }
+
+        .login-prompt {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-link:hover {
+            color: #224ec4;
+        }
+
+        .login-link {
+            color: #000000;
+        }
+
+        .login-text {
+            margin: 0;
+            color: #000000;
+        }
+
+        @media screen and (max-width: 1366px) {
+            form {
+                padding: 25px; /* Уменьшаем отступы формы для экранов ноутбуков */
+            }
+        }
+
+    </style>
+{% endblock %}
+
+{% block header %}
+{% endblock %}
+
+
+{% block content %}
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="input-group">
+            <label for="id_username">Логин:</label>
+            {{ form.username }}
+        </div>
+        <div class="input-group">
+            <label for="id_password1">Пароль</label>
+            {{ form.password }}
+        </div>
+        <div class='button-center'>
+            <button class="reg-button" type="submit">Login</button>
+        </div>
+        <hr class='hr-line'>
+        <div class="login-prompt">
+            <p class="login-text">Нет аккаунта? <a class="login-link" href="{% url 'register_client' %}">Зарегистрироваться</a>
+            </p>
+        </div>
+        <br>
+        <div class="login-prompt">
+            <p class="login-text"><a class="login-link" href="{% url 'main_layout' %}">Главная</a>
+            </p>
+        </div>
+    </form>
+
+{#    <div class="row justify-content-md-around">#}
+{#        <div class="col-12 col-md-6 col-lg-5 mb-5 mb-lg-0">#}
+{#            <div class="card bg-primary shadow-soft border-light p-4">#}
+{#                <div class="card-header text-center pb-0">#}
+{#                    <h2 class="h4">Sign in to our platform</h2>#}
+{#                    <span>Login here using your username and password</span>#}
+{#                </div>#}
+{#                <div class="card-body">#}
+{#                    <form method="post" class="mt-4">#}
+{#                        {% csrf_token %}#}
+{#                        <div class="form-group">#}
+{#                            <label for="username">Your email</label>#}
+{#                            <div class="input-group mb-4">#}
+{#                                <div class="input-group-prepend">#}
+{#                                <span class="input-group-text">#}
+{#                                    <span class="fas fa-envelope"></span>#}
+{#                            </span>#}
+{#                                </div>#}
+{#                                <input class="form-control" id="username"#}
+{#                                       placeholder="example@company.com" type="text" name="username"#}
+{#                                       aria-label="email address">#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="form-group">#}
+{#                            <div class="form-group"><label for="password">Password</label>#}
+{#                                <div class="input-group mb-4">#}
+{#                                    <div class="input-group-prepend"><span class="input-group-text"><span#}
+{#                                            class="fas fa-unlock-alt"></span></span></div>#}
+{#                                    <input class="form-control" name="password" id="password" placeholder="Password"#}
+{#                                           type="password" aria-label="Password" required>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <button type="submit" class="btn btn-block btn-primary">Login</button>#}
+{#                    </form>#}
+{#                    <div class="d-block d-sm-flex justify-content-center align-items-center mt-4"><span#}
+{#                            class="font-weight-normal">Not registered? <a href="{% url 'register_client' %}"#}
+{#                                                                          class="font-weight-bold">Create account</a></span>#}
+{#                    </div>#}
+{#                    <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">#}
+{#                        <span class="font-weight-normal"><a href="{% url 'main_layout' %}" class="font-weight-bold">Главная</a></span>#}
+{##}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{% endblock %}

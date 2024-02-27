@@ -1,0 +1,241 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+
+{% block styles %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            background: url("{% static 'img/Pattern4.png' %}");
+            background-size: cover;
+            margin-top: 60px;
+            padding: 0 40px;
+        }
+
+        .payment-list {
+            margin-top: 100px;
+            margin-bottom: 40px;
+        }
+
+        .payment-list-container {
+            max-height: 470px; /* Максимальная высота контейнера */
+            overflow-y: auto; /* Добавить скроллер только в случае необходимости */
+            border: 1px solid #ccc; /* Граница контейнера */
+            border-radius: 10px;
+            background-color: #e1e4f5; /* Цвет фона формы */
+            box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
+            padding: 10px; /* Закругление углов контейнера */
+            margin-left: 20px;
+            width: 1000px;
+        }
+
+        /* Стили для самого скроллера */
+        .payment-list-container::-webkit-scrollbar {
+            width: 10px; /* Ширина скроллера */
+        }
+
+        /* Стили для полосы скроллера */
+        .payment-list-container::-webkit-scrollbar-thumb {
+            background-color: #888; /* Цвет полосы скроллера */
+            border-radius: 5px; /* Закругление углов полосы скроллера */
+        }
+
+        /* Стили для трека скроллера (фоновая область) */
+        .payment-list-container::-webkit-scrollbar-track {
+            background-color: #f1f1f1; /* Цвет фоновой области трека скроллера */
+            border-radius: 5px; /* Закругление углов трека скроллера */
+        }
+
+        .payment-list-container table {
+            width: 100%; /* Ширина таблицы */
+            border-collapse: collapse; /* Схлопывание границ ячеек */
+        }
+
+        /* Стили для ячеек заголовков таблицы */
+        .payment-list-container th {
+            border: 1px solid #949494; /* Граница ячеек заголовков таблицы */
+            padding: 8px; /* Внутренние отступы ячеек заголовков таблицы */
+            text-align: left; /* Выравнивание текста по левому краю */
+        }
+
+        /* Стили для ячеек содержимого таблицы */
+        .payment-list-container td {
+            border: 1px solid #949494; /* Граница ячеек содержимого таблицы */
+            padding: 8px; /* Внутренние отступы ячеек содержимого таблицы */
+            text-align: left; /* Выравнивание текста по левому краю */
+        }
+
+        .firrow {
+            display: flex;
+            margin-bottom: 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block header %}
+    {% include 'client/header_agent.html' %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="payment-list">
+        <div class="firrow">
+            <div class="payment-list-container">
+                <p>КАСКО</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Документ</th>
+                        <th>Количество копий</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Паспорт или иной документ, удостоверяющий личность владельца автомобиля</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Технический паспорт автомобиля</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Документ, подтверждающий право собственности на автомобиль (свидетельство о праве
+                            собственности,
+                            договор купли-продажи и т. д.)
+                        </td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Справка об отсутствии долгов по штрафам и налогам на автомобиль</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Документы, подтверждающие наличие систем безопасности (если применимо)</td>
+                        <td>1 копия</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="payment-list-container">
+                <p>Страхование здоровья</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Документ</th>
+                        <th>Количество копий</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Паспорт или иной документ, удостоверяющий личность застрахованного</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Свидетельство о рождении или другой документ, подтверждающий возраст застрахованного</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Полис обязательного медицинского страхования (если применимо)</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Медицинская карта или история заболеваний застрахованного</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Документы, подтверждающие семейное положение и иждивенцев (если применимо)</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Документы о доходах (если требуется для расчета страхового взноса)</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Другие медицинские документы или справки по запросу страховой компании</td>
+                        <td>Согласно требованию</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="firrow">
+            <div class="payment-list-container">
+                <p>Обращение по страховому случаю (авария)</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Документ</th>
+                        <th>Количество копий</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Заявление о страховом случае (заполняется в страховой компании)</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Протокол ДТП (полученный на месте происшествия)</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Копии водительского удостоверения и технического паспорта автомобиля</td>
+                        <td>1 копия каждого</td>
+                    </tr>
+                    <tr>
+                        <td>Документы о медицинской помощи (если есть травмы)</td>
+                        <td>По необходимости</td>
+                    </tr>
+                    <tr>
+                        <td>Фотографии повреждений автомобиля и места происшествия</td>
+                        <td>По необходимости</td>
+                    </tr>
+                    <tr>
+                        <td>Свидетельские показания (если есть)</td>
+                        <td>По необходимости</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="payment-list-container">
+                <p>Обращение по страховому случаю (травма)</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Документ</th>
+                        <th>Количество копий</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Заявление о страховом случае (заполняется в страховой компании)</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Медицинская справка или иной медицинский документ, подтверждающий травму</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Фотографии травмы, если применимо</td>
+                        <td>По необходимости</td>
+                    </tr>
+                    <tr>
+                        <td>Другие медицинские документы и справки, по требованию страховой компании</td>
+                        <td>Согласно требованию</td>
+                    </tr>
+                    <tr>
+                        <td>Документы, подтверждающие расходы на лечение и реабилитацию</td>
+                        <td>По необходимости</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

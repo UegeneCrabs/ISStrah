@@ -1,0 +1,255 @@
+{% load static %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet">
+
+<style>
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .dropdown {
+        display: inline-block;
+        margin-right: 20px;
+    }
+
+    .dropdown span {
+        color: #013289;
+        font-weight: 700;
+    }
+
+    :root {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: "Montserrat", sans-serif;
+        color: #444444;
+    }
+
+    a {
+        color: #4154f1;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #717ff5;
+        text-decoration: none;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .navbar {
+        padding: 0;
+    }
+
+    .navbar ul {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        list-style: none;
+        align-items: center;
+    }
+
+    .navbar li {
+        position: relative;
+    }
+
+    .navbar a,
+    .navbar a:focus {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px 10px 30px;
+        font-family: "Nunito", sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        color: #013289;
+        white-space: nowrap;
+        transition: 0.3s;
+    }
+
+    .navbar a i,
+    .navbar a:focus i {
+        font-size: 12px;
+        line-height: 0;
+        margin-left: 5px;
+    }
+
+    .navbar a:hover:focus,
+    .navbar li:hover > a {
+        color: #4154f1;
+    }
+
+    .navbar .dropdown ul {
+        display: block;
+        position: absolute;
+        left: 14px;
+        top: calc(100% + 30px);
+        margin: 0;
+        padding: 10px 0;
+        z-index: 99;
+        opacity: 0;
+        visibility: hidden;
+        background: #fff;
+        box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+        transition: 0.3s;
+        border-radius: 4px;
+    }
+
+    .navbar .dropdown ul li {
+        min-width: 200px;
+    }
+
+    .navbar .dropdown ul a {
+        padding: 10px 20px;
+        font-size: 15px;
+        text-transform: none;
+        font-weight: 600;
+    }
+
+    .navbar .dropdown ul a i {
+        font-size: 12px;
+    }
+
+    .navbar .dropdown ul a:hover:hover,
+    .navbar .dropdown ul li:hover > a {
+        color: #4154f1;
+    }
+
+    .navbar .dropdown:hover > ul {
+        opacity: 1;
+        top: 100%;
+        visibility: visible;
+    }
+
+    .navbar .dropdown .dropdown ul {
+        top: 0;
+        left: calc(100% - 30px);
+        visibility: hidden;
+    }
+
+    .navbar .dropdown .dropdown:hover > ul {
+        opacity: 1;
+        top: 0;
+        left: 100%;
+        visibility: visible;
+    }
+
+    .header {
+        transition: all 0.5s;
+        z-index: 997;
+        padding: 20px 0;
+        background: #e1e4f5;
+        box-shadow: 0px 5px 5px -3px rgba(112, 150, 202, 0.6);
+    }
+
+    .header .logo {
+        line-height: 0;
+    }
+
+    .header .logo img {
+        max-height: 40px;
+        margin-right: 6px;
+    }
+
+    .header .logo span {
+        font-size: 30px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        color: #012970;
+        font-family: "Nunito", sans-serif;
+        margin-top: 3px;
+    }
+</style>
+
+<header id="header" class="header fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+        <a href="{% url 'personalaccountclient' %}">
+            <img src="{% static 'img/logo.png' %}" alt="logo">
+            <span>ISStrah</span>
+        </a>
+        <nav id="navbar" class="navbar">
+            <ul>
+                <li>
+                    <div class="dropdown">
+                        <span>Автомобили</span>
+                        <div class="dropdown-content">
+                            <a href="{% url 'calc_ins_auto' %}">Калькулятор стоимости ОСАГО</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <span>Здоровье</span>
+                        <div class="dropdown-content">
+                            <a href="{% url 'calc_ins_health' %}">Калькулятор стоимости страхования здоровья</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <span>Заявки на составление договора</span>
+                        <div class="dropdown-content">
+                            <a href="{% url 'client_requests_car' %}">Заявки на ОСАГО</a>
+                            <a href="{% url 'client_requests_health' %}">Заявки на страхование здоровья</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <span>Договора</span>
+                        <div class="dropdown-content">
+                            <a href="{% url 'health_contracts' %}">Здоровье</a>
+                            <a href="{% url 'car_contracts' %}">Автомобиль</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a style="font-weight: 700; " href="{% url 'profile' %}">{{ user.username }}</a>
+                </li>
+                <li>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button style="background: #4154f1; padding: 8px 20px; border-radius: 4px; margin-left: 30px; color: #fff; border: none;"
+                                type="submit">Logout
+                        </button>
+                    </form>
+                </li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+    </div>
+</header>

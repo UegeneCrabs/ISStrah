@@ -1,0 +1,1050 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+
+{% block styles %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <style>
+        :root {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Open Sans", sans-serif;
+            color: #444444;
+        }
+
+        a {
+            color: #4154f1;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #717ff5;
+            text-decoration: none;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: "Nunito", sans-serif;
+        }
+
+        /*--------------------------------------------------------------
+        # Sections
+        --------------------------------------------------------------*/
+        section {
+            padding: 60px 0;
+            overflow: hidden;
+            margin-top: 100px;
+        }
+
+        .section-header {
+            text-align: center;
+            padding-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 13px;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin: 0;
+            color: #4154f1;
+            text-transform: uppercase;
+        }
+
+        .section-header p {
+            margin: 10px 0 0 0;
+            padding: 0;
+            font-size: 38px;
+            line-height: 42px;
+            font-weight: 700;
+            color: #012970;
+        }
+
+        @media (max-width: 768px) {
+            .section-header p {
+                font-size: 28px;
+                line-height: 32px;
+            }
+        }
+
+        .back-to-top i {
+            font-size: 24px;
+            color: #fff;
+            line-height: 0;
+        }
+
+        .header {
+            transition: all 0.5s;
+            z-index: 997;
+            padding: 20px 0;
+            background: #e1e4f5;
+            box-shadow: 0 5px 5px -3px rgba(112, 150, 202, 0.6);
+        }
+
+        .header .logo {
+            line-height: 0;
+        }
+
+
+        .header .logo span {
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #012970;
+            font-family: "Nunito", sans-serif;
+            margin-top: 3px;
+        }
+
+        .navbar {
+            padding: 0;
+        }
+
+        .navbar ul {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        .navbar li {
+            position: relative;
+        }
+
+        .navbar a,
+        .navbar a:focus {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0 10px 30px;
+            font-family: "Nunito", sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #013289;
+            white-space: nowrap;
+            transition: 0.3s;
+        }
+
+        .navbar a i,
+        .navbar a:focus i {
+            font-size: 12px;
+            line-height: 0;
+            margin-left: 5px;
+        }
+
+        .navbar a:hover,
+        .navbar .active,
+        .navbar .active:focus,
+        .navbar li:hover > a {
+            color: #4154f1;
+        }
+
+        .navbar .getstarted,
+        .navbar .getstarted:focus {
+            background: #4154f1;
+            padding: 8px 20px;
+            margin-left: 30px;
+            border-radius: 4px;
+            color: #fff;
+        }
+
+        .navbar .getstarted:hover,
+        .navbar .getstarted:focus:hover {
+            color: #fff;
+            background: #5969f3;
+        }
+
+        .navbar .dropdown ul {
+            display: block;
+            position: absolute;
+            left: 14px;
+            top: calc(100% + 30px);
+            margin: 0;
+            padding: 10px 0;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            background: #fff;
+            box-shadow: 0 0 30px rgba(127, 137, 161, 0.25);
+            transition: 0.3s;
+            border-radius: 4px;
+        }
+
+        .navbar .dropdown ul li {
+            min-width: 200px;
+        }
+
+        .navbar .dropdown ul a {
+            padding: 10px 20px;
+            font-size: 15px;
+            text-transform: none;
+            font-weight: 600;
+        }
+
+        .navbar .dropdown ul a i {
+            font-size: 12px;
+        }
+
+        .navbar .dropdown ul a:hover,
+        .navbar .dropdown ul .active:hover,
+        .navbar .dropdown ul li:hover > a {
+            color: #4154f1;
+        }
+
+        .navbar .dropdown:hover > ul {
+            opacity: 1;
+            top: 100%;
+            visibility: visible;
+        }
+
+        .navbar .dropdown .dropdown ul {
+            top: 0;
+            left: calc(100% - 30px);
+            visibility: hidden;
+        }
+
+        .navbar .dropdown .dropdown:hover > ul {
+            opacity: 1;
+            top: 0;
+            left: 100%;
+            visibility: visible;
+        }
+
+        @media (max-width: 1366px) {
+            .navbar .dropdown .dropdown ul {
+                left: -90%;
+            }
+
+            .navbar .dropdown .dropdown:hover > ul {
+                left: -100%;
+            }
+        }
+
+        .about .content {
+            background-color: #f6f9ff;
+            padding: 40px;
+        }
+
+        .about h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #4154f1;
+            text-transform: uppercase;
+        }
+
+        .about h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #012970;
+        }
+
+        .about p {
+            margin: 15px 0 30px 0;
+            line-height: 24px;
+        }
+
+        .about .btn-read-more {
+            line-height: 0;
+            padding: 15px 40px;
+            border-radius: 4px;
+            transition: 0.5s;
+            color: #fff;
+            background: #4154f1;
+            box-shadow: 0 5px 25px rgba(65, 84, 241, 0.3);
+        }
+
+        .about .btn-read-more span {
+            font-family: "Nunito", sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        .about .btn-read-more i {
+            margin-left: 5px;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .about .btn-read-more:hover i {
+            transform: translateX(5px);
+        }
+
+
+        .values .box h3 {
+            font-size: 24px;
+            color: #012970;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+
+        .counts .count-box i {
+            font-size: 42px;
+            line-height: 0;
+            margin-right: 20px;
+            color: #4154f1;
+        }
+
+        .counts .count-box span {
+            font-size: 36px;
+            display: block;
+            font-weight: 600;
+            color: #0b198f;
+        }
+
+        .counts .count-box p {
+            padding: 0;
+            margin: 0;
+            font-family: "Nunito", sans-serif;
+            font-size: 14px;
+        }
+
+        .features .feature-box h3 {
+            font-size: 18px;
+            color: #012970;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .features .feature-box i {
+            line-height: 0;
+            background: #ecf3ff;
+            padding: 4px;
+            margin-right: 10px;
+            font-size: 24px;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+
+        .features .feature-box:hover i {
+            background: #4154f1;
+            color: #fff;
+        }
+
+        .features .feture-tabs h3 {
+            color: #012970;
+            font-weight: 700;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .features .feture-tabs h3 {
+                font-size: 28px;
+            }
+        }
+
+        .features .feture-tabs .tab-content h4 {
+            font-size: 18px;
+            margin: 0;
+            font-weight: 700;
+            color: #012970;
+        }
+
+        .features .feture-tabs .tab-content i {
+            font-size: 24px;
+            line-height: 0;
+            margin-right: 8px;
+            color: #4154f1;
+        }
+
+        .features .feature-icons h3 {
+            color: #012970;
+            font-weight: 700;
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .features .feature-icons h3 {
+                font-size: 28px;
+            }
+        }
+
+        .features .feature-icons .content .icon-box h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: #012970;
+        }
+
+        .features .feature-icons .content .icon-box i {
+            font-size: 44px;
+            line-height: 44px;
+            color: #0245bc;
+            margin-right: 15px;
+        }
+
+        .features .feature-icons .content .icon-box p {
+            font-size: 15px;
+            color: #848484;
+        }
+
+        .services .service-box {
+            box-shadow: 0 0 30px rgba(1, 41, 112, 0.08);
+            height: 100%;
+            padding: 40px 30px;
+            text-align: center;
+            transition: 0.3s;
+            border-radius: 5px;
+        }
+
+        .services .service-box .icon {
+            font-size: 36px;
+            padding: 40px 20px;
+            border-radius: 4px;
+            position: relative;
+            margin-bottom: 25px;
+            display: inline-block;
+            line-height: 0;
+            transition: 0.3s;
+        }
+
+        .services .service-box h3 {
+            color: #444444;
+            font-weight: 700;
+        }
+
+        .services .service-box .read-more {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 8px 20px;
+        }
+
+        .services .service-box .read-more i {
+            line-height: 0;
+            margin-left: 5px;
+            font-size: 18px;
+        }
+
+        .services .service-box.blue {
+            border-bottom: 3px solid #2db6fa;
+        }
+
+        .services .service-box.blue .icon {
+            color: #2db6fa;
+            background: #dbf3fe;
+        }
+
+        .services .service-box.blue .read-more {
+            color: #2db6fa;
+        }
+
+        .services .service-box.blue:hover {
+            background: #2db6fa;
+        }
+
+        .services .service-box.orange {
+            border-bottom: 3px solid #f68c09;
+        }
+
+        .services .service-box.orange .icon {
+            color: #f68c09;
+            background: #fde3c4;
+        }
+
+        .services .service-box.orange .read-more {
+            color: #f68c09;
+        }
+
+        .services .service-box.orange:hover {
+            background: #f68c09;
+        }
+
+        .services .service-box.green {
+            border-bottom: 3px solid #08da4e;
+        }
+
+        .services .service-box.green .icon {
+            color: #08da4e;
+            background: #cffddf;
+        }
+
+        .services .service-box.green .read-more {
+            color: #08da4e;
+        }
+
+        .services .service-box.green:hover {
+            background: #08da4e;
+        }
+
+        .services .service-box.red {
+            border-bottom: 3px solid #e9222c;
+        }
+
+        .services .service-box.red .icon {
+            color: #e9222c;
+            background: #fef7f8;
+        }
+
+        .services .service-box.red .read-more {
+            color: #e9222c;
+        }
+
+        .services .service-box.red:hover {
+            background: #e9222c;
+        }
+
+        .services .service-box.purple {
+            border-bottom: 3px solid #b50edf;
+        }
+
+        .services .service-box.purple .icon {
+            color: #b50edf;
+            background: #f8e4fd;
+        }
+
+        .services .service-box.purple .read-more {
+            color: #b50edf;
+        }
+
+        .services .service-box.purple:hover {
+            background: #b50edf;
+        }
+
+        .services .service-box.pink {
+            border-bottom: 3px solid #f51f9c;
+        }
+
+        .services .service-box.pink .icon {
+            color: #f51f9c;
+            background: #feecf7;
+        }
+
+        .services .service-box.pink .read-more {
+            color: #f51f9c;
+        }
+
+        .services .service-box.pink:hover {
+            background: #f51f9c;
+        }
+
+        .services .service-box:hover h3,
+        .services .service-box:hover p,
+        .services .service-box:hover .read-more {
+            color: #fff;
+        }
+
+        .services .service-box:hover .icon {
+            background: #fff;
+        }
+
+        .portfolio #portfolio-flters {
+            padding: 0;
+            margin: 0 auto 25px auto;
+            list-style: none;
+            text-align: center;
+            background: white;
+            border-radius: 50px;
+            padding: 2px 15px;
+        }
+
+        .portfolio #portfolio-flters li {
+            cursor: pointer;
+            display: inline-block;
+            padding: 8px 20px 10px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1;
+            color: #444444;
+            margin: 0 4px 8px 4px;
+            transition: 0.3s;
+            border-radius: 50px;
+            border: 1px solid #fff;
+        }
+
+        .portfolio #portfolio-flters li:hover,
+        .portfolio #portfolio-flters li.filter-active {
+            color: #4154f1;
+            border-color: #4154f1;
+        }
+
+        .portfolio #portfolio-flters li:last-child {
+            margin-right: 0;
+        }
+
+        .portfolio .portfolio-wrap {
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            background: rgba(255, 255, 255, 0.75);
+        }
+
+        .portfolio .portfolio-wrap::before {
+            content: "";
+            background: rgba(255, 255, 255, 0.75);
+            position: absolute;
+            left: 30px;
+            right: 30px;
+            top: 30px;
+            bottom: 30px;
+            transition: all ease-in-out 0.3s;
+            z-index: 2;
+            opacity: 0;
+        }
+
+        .portfolio .portfolio-wrap .portfolio-info {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            text-align: center;
+            z-index: 3;
+            transition: all ease-in-out 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .portfolio .portfolio-wrap .portfolio-info::before {
+            display: block;
+            content: "";
+            width: 48px;
+            height: 48px;
+            position: absolute;
+            top: 35px;
+            left: 35px;
+            border-top: 3px solid rgba(1, 41, 112, 0.2);
+            border-left: 3px solid rgba(1, 41, 112, 0.2);
+            transition: all 0.5s ease 0s;
+            z-index: 9994;
+        }
+
+        .portfolio .portfolio-wrap .portfolio-info::after {
+            display: block;
+            content: "";
+            width: 48px;
+            height: 48px;
+            position: absolute;
+            bottom: 35px;
+            right: 35px;
+            border-bottom: 3px solid rgba(1, 41, 112, 0.2);
+            border-right: 3px solid rgba(1, 41, 112, 0.2);
+            transition: all 0.5s ease 0s;
+            z-index: 9994;
+        }
+
+        .portfolio .portfolio-wrap .portfolio-info h4 {
+            font-size: 20px;
+            color: #012970;
+            font-weight: 700;
+        }
+
+        .portfolio .portfolio-wrap .portfolio-info p {
+            color: #012970;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            padding: 0;
+            margin: 0;
+        }
+
+        .portfolio .portfolio-wrap .portfolio-links a {
+            color: #fff;
+            background: #4154f1;
+            margin: 10px 2px;
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .portfolio .portfolio-wrap .portfolio-links a i {
+            font-size: 24px;
+            line-height: 0;
+        }
+
+        .portfolio .portfolio-wrap .portfolio-links a:hover {
+            background: #5969f3;
+        }
+
+
+        .portfolio .portfolio-wrap:hover::before {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 1;
+        }
+
+        .portfolio .portfolio-wrap:hover .portfolio-info {
+            opacity: 1;
+        }
+
+        .portfolio .portfolio-wrap:hover .portfolio-info::before {
+            top: 15px;
+            left: 15px;
+        }
+
+        .portfolio .portfolio-wrap:hover .portfolio-info::after {
+            bottom: 15px;
+            right: 15px;
+        }
+
+        .portfolio-details .portfolio-info {
+            padding: 30px;
+            box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
+        }
+
+        .portfolio-details .portfolio-info h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .portfolio-details .portfolio-info ul {
+            list-style: none;
+            padding: 0;
+            font-size: 15px;
+        }
+
+        .portfolio-details .portfolio-info ul li + li {
+            margin-top: 10px;
+        }
+
+        .portfolio-details .portfolio-description {
+            padding-top: 30px;
+        }
+
+        .portfolio-details .portfolio-description h2 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .portfolio-details .portfolio-description p {
+            padding: 0;
+        }
+
+        .team {
+            background: #fff;
+            padding: 60px 0;
+        }
+
+        .team .member {
+            overflow: hidden;
+            text-align: center;
+            border-radius: 5px;
+            background: #fff;
+            box-shadow: 0px 0 30px rgba(1, 41, 112, 0.08);
+            transition: 0.3s;
+        }
+
+
+        .team .member .social {
+            position: absolute;
+            right: -100%;
+            top: 30px;
+            opacity: 0;
+            border-radius: 4px;
+            transition: 0.5s;
+            background: rgba(255, 255, 255, 0.3);
+            z-index: 2;
+        }
+
+        .team .member .social a {
+            transition: color 0.3s;
+            color: rgba(1, 41, 112, 0.5);
+            margin: 15px 12px;
+            display: block;
+            line-height: 0;
+            text-align: center;
+        }
+
+        .team .member .social a:hover {
+            color: rgba(1, 41, 112, 0.8);
+        }
+
+        .team .member .social i {
+            font-size: 18px;
+        }
+
+        .team .member .member-info {
+            padding: 10px 15px 20px 15px;
+        }
+
+        .team .member .member-info h4 {
+            font-weight: 700;
+            margin-bottom: 5px;
+            font-size: 20px;
+            color: #012970;
+        }
+
+        .team .member .member-info span {
+            display: block;
+            font-size: 14px;
+            font-weight: 400;
+            color: #aaaaaa;
+        }
+
+        .team .member .member-info p {
+            font-style: italic;
+            font-size: 14px;
+            padding-top: 15px;
+            line-height: 26px;
+            color: #5e5e5e;
+        }
+
+        .team .member:hover {
+            transform: scale(1.08);
+            box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+        }
+
+        .team .member:hover .social {
+            right: 8px;
+            opacity: 1;
+        }
+
+        @keyframes animate-loading {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+
+    </style>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>FlexStart Bootstrap Template - Index</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+    <header id="header" class="header fixed-top">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+            <a href="{% url 'main_layout' %}" class="logo d-flex align-items-center">
+                <img src="{% static 'img/logo.png' %}" alt="logo">
+                <span>ISStrah</span>
+            </a>
+            <nav id="navbar" class="navbar">
+                <ul>
+                    <li><a class="nav-link scrollto" href="#about">About</a></li>
+                    <li><a class="nav-link scrollto" href="#services">Services</a></li>
+                    {% comment %} <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>{% endcomment %}
+                    <li><a class="nav-link scrollto" href="#FAQ">FAQ</a></li>
+                    <li><a class="getstarted scrollto" href="{% url 'login' %}">Get Started</a></li>
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav>
+        </div>
+    </header>
+{% endblock %}
+
+
+{% block content %}
+    <section id="about" class="about">
+        <div class="container" data-aos="fade-up">
+
+            <div class="row gx-0">
+
+                <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="content">
+                        <h3>О нас</h3>
+                        <h2>ISStrah</h2>
+                        <p>
+                            Страховая компания ISStrah специализируется на предоставлении услуг страхования здоровья
+                            и автомобилей. Она предлагает разнообразные программы страхования, охватывающие как основные
+                            медицинские расходы, так и аварийные случаи на дорогах. ISStrah известна своими гибкими и
+                            индивидуальными подходами к клиентам, широким спектром услуг и надежным обслуживанием.
+                            Компания стремится обеспечить своих клиентов защитой и уверенностью в случае неожиданных
+                            ситуаций, связанных со здоровьем и автомобилями.
+                        </p>
+                        <div class="text-center text-lg-start">
+                            <a href="#"
+                               class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center">
+                                <span>Read More</span>
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <img style="width: 500px; height: 500px" src="{% static 'img/sheat.jpg' %}">
+                
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container" data-aos="fade-up">
+            <div class="row gy-4">
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-box blue">
+                        <i class="ri-discuss-line icon"></i>
+                        <h3>Страхование здоровья</h3>
+                        <p>Мы предоставляем различные программы медицинского страхования,
+                            которые покрывают расходы на лечение, операции, обследования,
+                            а также консультации у врачей и приобретение лекарств.</p>
+                        <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-box orange">
+                        <i class="ri-discuss-line icon"></i>
+                        <h3>Страхование автомобилей</h3>
+                        <p>Наши страховые пакеты для автомобилей включают в себя полную или частичную защиту
+                            от финансовых потерь, связанных с дорожными происшествиями, ущербом в результате
+                            столкновений, угоном, а также возможными третьими сторонами.</p>
+                        <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-box green">
+                        <i class="ri-discuss-line icon"></i>
+                        <h3>Консультации и помощь клиентам</h3>
+                        <p>Мы предоставляем консультации нашим клиентам по всем вопросам, связанным со страхованием,
+                            помогая выбрать оптимальные программы и ответив на вопросы о покрытии, процедурах выплаты
+                            и других важных аспектах страхования.</p>
+                        <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+                <hr>
+                <h3>Скоро...</h3>
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="500">
+                    <div class="service-box red">
+                        <i class="ri-discuss-line icon"></i>
+                        <h3>Страхование недвижимости</h3>
+                        <p>Мы готовимся расширить наш ассортимент услуг и начать предоставлять полное страхование для
+                            жилых и коммерческих объектов недвижимости. Это позволит нашим клиентам получить защиту от
+                            различных рисков, таких как пожар, стихийные бедствия, кража, вандализм и многое другое</p>
+                        <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="600">
+                    <div class="service-box purple">
+                        <i class="ri-discuss-line icon"></i>
+                        <h3>Страхование путешествий</h3>
+                        <p>В ближайшее время мы планируем внедрить страхование путешествий, включая как отдельные полисы
+                            для конкретных поездок, так и ежегодные полисы, которые обеспечат защиту во время
+                            медицинских чрезвычайных ситуаций, отмены или задержки поездок, утери багажа и других
+                            непредвиденных обстоятельств во время путешествий.</p>
+                        <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="700">
+                    <div class="service-box pink">
+                        <i class="ri-discuss-line icon"></i>
+                        <h3>Страхование ответственности предпринимателей</h3>
+                        <p>В ближайшее время мы планируем ввести страхование ответственности предпринимателей, чтобы
+                            помочь бизнесам защитить себя от финансовых потерь, связанных с возможными претензиями и
+                            исками со стороны третьих лиц.</p>
+                        <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="FAQ" class="team">
+        <div class="container" data-aos="fade-up">
+            <header class="section-header">
+                <p>FAQ</p>
+            </header>
+            <div class="row gy-4">
+                <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+                    <div class="member">
+                        <div class="member-img">
+                            <div class="social">
+                                <a href=""><i class="bi bi-twitter"></i></a>
+                                <a href=""><i class="bi bi-facebook"></i></a>
+                                <a href=""><i class="bi bi-instagram"></i></a>
+                                <a href=""><i class="bi bi-linkedin"></i></a>
+                            </div>
+                        </div>
+                        <div class="member-info">
+                            <h4>Какие виды страхования вы предлагаете?</h4>
+                            <p>Мы предлагаем страхование КАСКО для автомобилей и медицинское страхование для
+                                здоровья.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+                    <div class="member">
+                        <div class="member-img">
+                            <div class="social">
+                                <a href=""><i class="bi bi-twitter"></i></a>
+                                <a href=""><i class="bi bi-facebook"></i></a>
+                                <a href=""><i class="bi bi-instagram"></i></a>
+                                <a href=""><i class="bi bi-linkedin"></i></a>
+                            </div>
+                        </div>
+                        <div class="member-info">
+                            <h4>Каковы условия и стоимость страховых полисов?</h4>
+                            <p>Условия и стоимость страховых полисов зависят от выбранного вида страхования, покрываемых
+                                рисков, срока действия полиса и других факторов. Расчет осуществляется индивидуально для
+                                каждого клиента.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
+                    <div class="member">
+                        <div class="member-img">
+                            <div class="social">
+                                <a href=""><i class="bi bi-twitter"></i></a>
+                                <a href=""><i class="bi bi-facebook"></i></a>
+                                <a href=""><i class="bi bi-instagram"></i></a>
+                                <a href=""><i class="bi bi-linkedin"></i></a>
+                            </div>
+                        </div>
+                        <div class="member-info">
+                            <h4>Как быстро выплачиваются страховые компенсации в случае ущерба или происшествия?</h4>
+                            <p>Мы стремимся к оперативной обработке и выплате компенсаций. Сроки зависят от сложности
+                                случая, но мы делаем все возможное, чтобы сделать это быстро и эффективно.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="400">
+                    <div class="member">
+                        <div class="member-img">
+                            <div class="social">
+                                <a href=""><i class="bi bi-twitter"></i></a>
+                                <a href=""><i class="bi bi-facebook"></i></a>
+                                <a href=""><i class="bi bi-instagram"></i></a>
+                                <a href=""><i class="bi bi-linkedin"></i></a>
+                            </div>
+                        </div>
+                        <div class="member-info">
+                            <h4>Какие документы или информацию мне потребуется предоставить при оформлении
+                                страховки?</h4>
+                            <p>Для оформления КАСКО потребуются документы о собственности на автомобиль и водительские
+                                права. Для медицинского страхования - информация о состоянии здоровья и документы,
+                                подтверждающие личность.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,274 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+
+{% block styles %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <style>
+
+
+        @import url("https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        nav {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -o-user-select: none;
+        }
+
+        nav > ul,
+        nav > ul > li {
+            outline: 0;
+        }
+
+        nav > ul > li > a {
+            text-decoration: none;
+        }
+
+        body {
+            min-height: 100vh;
+            background: url("{% static 'img/Pattern4.png' %}");
+            background-size: cover;
+            margin-top: 60px;
+            margin-left: 40px;
+        }
+
+        .main-menu > ul > li {
+            position: relative;
+            display: block;
+            width: 180px;
+        }
+
+        .main-menu > ul > li > a {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 1rem;
+            transition: all 0.1s linear;
+            -webkit-transition: all 0.1s linear;
+            padding: 10px 0;
+        }
+
+
+        .main-menu li:hover > a, .main-menu li.active > a, .main-menu li > a:focus {
+            text-decoration: none;
+            color: #fff;
+            background-color: rgb(29, 79, 215, 0.7);
+        }
+
+
+        @keyframes transform {
+            0%,
+            100% {
+                border-radius: 33% 67% 70% 30% / 30% 40% 70% 70%;
+            }
+            20% {
+                border-radius: 37% 63% 51% 49% / 37% 35% 35% 63%;
+            }
+            40% {
+                border-radius: 36% 64% 64% 36% / 64% 48% 52% 26%;
+            }
+            60% {
+                border-radius: 37% 63% 51% 49% / 30% 30% 70% 73%;
+            }
+            80% {
+                border-radius: 40% 60% 42% 58% / 51% 51% 49% 59%;
+            }
+        }
+
+        @keyframes movement_one {
+            0%,
+            100% {
+                transform: none;
+            }
+            50% {
+                transform: translate(50%, 20%) rotateY(10deg) scale(1);
+            }
+        }
+
+        @keyframes movement_two {
+            0%,
+            500% {
+                transform: none;
+            }
+            50% {
+                transform: translate(50%, 100%) rotate(-200deg) scale(1.3);
+            }
+        }
+
+
+        /* CARD */
+
+        section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding: 80px 40px 40px 80px;
+        }
+
+        .card {
+            width: min(100%, 550px);
+            background: rgba(255, 255, 255);
+            border-radius: 16px;
+            font-family: "Poppins", sans-serif;
+            z-index: 5;
+            box-shadow: 5px 5px 50px 2px rgba(0, 6, 11, 0.2);
+        }
+
+        .card > img {
+            display: block;
+            width: 100%;
+            max-width: 550px;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            object-position: 50% 50%;
+            border-radius: 16px 16px 0 0;
+            filter: contrast(70%);
+            transition: all 0.6s cubic-bezier(0.43, 0.41, 0.22, 0.91);
+        }
+
+        .card > img:hover {
+            filter: contrast(100%);
+        }
+
+        .card-content {
+            display: flex;
+            flex-direction: column;
+            padding: 20px 20px 20px;
+        }
+
+        .card-content > p {
+            margin-bottom: 10px;
+        }
+
+        .card-content > p:nth-child(1) {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1e40af;
+        }
+
+        .card-content > p:nth-child(2) {
+            font-size: 15px;
+            font-weight: 400;
+            color: #6b7280;
+        }
+
+        .card-content h1, p, ol {
+            font-family: "Montserrat", sans-serif;
+            font-weight: 700;
+            
+        }
+
+        .card-content h1 {
+            font-size: 35px;
+        }
+
+
+        @media (max-width: 900px) {
+            section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            section {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block header %}
+    {% include 'client/header.html' %}
+{% endblock %}
+
+
+{% block content %}
+
+    <section>
+        <div class="card">
+            <img src="{% static 'img/home.jpg' %}" alt="logo">
+            <div class="card-content">
+                <h1>Как не попасть в чрезвычайную ситуацию дома</h1>
+                <p>Дом - место, где мы должны чувствовать себя наиболее защищенными. Однако, несчастные случаи могут
+                    произойти в любом месте, в том числе и дома. В этой статье мы рассмотрим несколько простых, но
+                    эффективных способов предотвратить чрезвычайные ситуации в своем доме.</p>
+                <ol>
+                    <li>Установите сигнализацию и датчики движения: Это поможет предотвратить проникновение
+                        злоумышленников
+                        и снизить риск возгорания или протечки воды.
+                    </li>
+                    <li>Поддерживайте порядок и чистоту: Убедитесь, что ваш дом всегда в порядке, чтобы избежать падений
+                        и
+                        других несчастных случаев, связанных с неряшливостью.
+                    </li>
+                    <li>Проведите инструктаж по безопасности для семьи: Важно, чтобы все члены семьи знали, как
+                        действовать
+                        в чрезвычайных ситуациях, например, пожаре или землетрясении.
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="{% static 'img/street.jpg' %}" alt="logo">
+            <div class="card-content">
+                <h1>Как не попасть в чрезвычайную ситуацию на улице</h1>
+                <p>Прогулки по улицам города могут быть приятными и интересными, но не всегда безопасными. В этой статье
+                    мы рассмотрим несколько простых правил, которые помогут вам избежать чрезвычайных ситуаций, когда вы
+                    находитесь на улице.</p>
+                <ol>
+                    <li>Будьте внимательны: Особенно в незнакомых районах или поздно вечером, оставайтесь бдительными и
+                        следите за своим окружением.
+                    </li>
+                    <li>Не ходите одни по темным улицам: Попросите кого-то сопровождать вас, если вам нужно пройти через
+                        малопросматриваемые районы.
+                    </li>
+                    <li>Изучите маршрут заранее: Если вы путешествуете в незнакомом городе, изучите свой маршрут
+                        заранее, чтобы избежать ошибочного попадания в опасные районы.
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="card">
+            <img src="{% static 'img/rest.jpg' %}" alt="logo">
+            <div class="card-content">
+                <h1>Как не попасть в чрезвычайную ситуацию на отдыхе</h1>
+                <p>Отдых должен быть временем отдыха и удовольствия, но никогда не стоит забывать о безопасности. В этой
+                    статье мы рассмотрим несколько советов, которые помогут вам избежать чрезвычайных ситуаций во время
+                    вашего отдыха.</p>
+                <ol>
+                    <li>Храните ценные вещи в безопасном месте: Подумайте о том, как хранить ваши документы, деньги и
+                        другие ценности, чтобы избежать их кражи.
+                    </li>
+                    <li>Исследуйте местность: Прежде чем отправиться в незнакомое место, изучите его особенности,
+                        опасности и рекомендации по безопасности.
+                    </li>
+                    <li>Следуйте местным правилам и рекомендациям: Уважайте местные обычаи и законы, чтобы избежать
+                        ненужных проблем и конфликтов.
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Calculator</title>
+
+</head>
+<body>
+    <h1>Insurance Calculator</h1>
+
+    <!-- Форма для ввода данных -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Calculate</button>
+    </form>
+
+
+     {% if insurance_cost %}
+        <h1>Insurance Calculation Result</h1>
+        <p>The estimated insurance cost is: {{ insurance_cost }}</p>
+    {% endif %}
+
+
+</body>
+</html>

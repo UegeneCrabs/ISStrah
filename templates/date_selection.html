@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Selection</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#id_brand').change(function () {
+                var brand = $(this).val();
+                $.ajax({
+                    url: '{% url 'get_models' %}',
+                    data: {
+                        'brand': brand
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        var modelSelect = $('#id_model');
+                        modelSelect.empty();
+                        $.each(data, function (index, value) {
+                            modelSelect.append($('<option>', {
+                                value: value,
+                                text: value
+                            }));
+                        });
+
+                        // Trigger change event on model select to update horse power select
+                        modelSelect.trigger('change');
+                    }
+                });
+            });
+
+            $('#id_model').change(function () {
+                var brand = $('#id_brand').val();
+                var model = $(this).val();
+                $.ajax({
+                    url: '{% url 'get_horse_powers' %}',
+                    data: {
+                        'brand': brand,
+                        'model': model
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        var horsePowerSelect = $('#id_horse_power');
+                        horsePowerSelect.empty();
+                        $.each(data, function (index, value) {
+                            horsePowerSelect.append($('<option>', {
+                                value: value,
+                                text: value
+                            }));
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Car Selection</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
