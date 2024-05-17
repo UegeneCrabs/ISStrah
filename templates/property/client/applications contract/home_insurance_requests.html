@@ -1,0 +1,185 @@
+{% extends 'base_layout/layout.html' %}
+{% load static %}
+
+{% block styles %}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+
+    <!-- Additional Styles (if needed) -->
+    <link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" rel="stylesheet">
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font-family: "Montserrat", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url("{% static 'img/LightCar.png' %}");
+            background-size: cover;
+        }
+
+        .ui-slider-handle {
+            width: 1em;
+            height: 1em;
+            top: 50%;
+            margin-top: -.5em;
+        }
+
+        .form_calculates {
+            margin-top: 50px;
+            padding: 35px;
+            border-radius: 25px;
+            background-color: #e1e4f5;
+            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+            border: #d4dcfa 1px solid;
+        }
+
+        .form_calculate label {
+            display: block;
+            color: #000000;
+            font-size: 1rem;;
+            margin-bottom: 5px;
+        }
+
+        .form_calculate input[type="text"],
+        .form_calculate input[type="email"],
+        .form_calculate input[type="password"],
+        .form_calculate input[type="number"],
+        .form_calculate select,
+        .form_calculate select option {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 0;
+            background-color: #ffffff;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.875rem;
+            color: #000000;
+        }
+
+        .button-center {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        button {
+            background: #4154f1;
+            padding: 8px 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            color: #fff;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        @media screen and (max-width: 1366px) {
+            form {
+                padding: 25px; /* Уменьшаем отступы формы для экранов ноутбуков */
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block header %}
+    {% include 'users/client/header.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="form_calculates">
+        <div class="container">
+            <h1>Мои заявки на страхование квартиры</h1>
+            <form method="get" action="{% url 'property:search_request_home_insurance' %}">
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Поиск</button>
+            </form>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Город</th>
+                    <th>Улица</th>
+                    <th>Дом</th>
+                    <th>Квартира</th>
+                    <th>Стоимость страховки</th>
+                    <th>Внутренняя отделка</th>
+                    <th>Конструктивные элементы</th>
+                    <th>Гражданская ответственность</th>
+                    <th>Домашнее имущество</th>
+                    <th>Дополнительная защита</th>
+                    <th>Риск военных действий</th>
+                    <th>Ответственность перед соседями при ремонте</th>
+                    <th>Воздействие атмосферных осадков</th>
+                    <th>Статус</th>
+                    <th>Время записи</th>
+                    <th>Редактирование</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for record in home_insurance_records %}
+                    <tr>
+                        <td>{{ record.city }}</td>
+                        <td>{{ record.street }}</td>
+                        <td>{{ record.house }}</td>
+                        <td>{{ record.apartment }}</td>
+                        <td>{{ record.insurance_cost }}</td>
+                        <td>{{ record.get_interior_finish_display }}</td>
+                        <td>{{ record.get_structural_elements_display }}</td>
+                        <td>{{ record.get_civil_liability_display }}</td>
+                        <td>{{ record.get_household_property_display }}</td>
+                        <td>{{ record.additional_protection|yesno:"Да,Нет" }}</td>
+                        <td>{{ record.war_risk|yesno:"Да,Нет" }}</td>
+                        <td>{{ record.neighbor_repair_liability|yesno:"Да,Нет" }}</td>
+                        <td>{{ record.atmospheric_impact|yesno:"Да,Нет" }}</td>
+                        <td>{{ record.get_status_display }}</td>
+                        <td>
+                            {% if record.status == 'in_progress' %}
+                                {% if record.schedule %}
+                                    {{ record.schedule.date }} {{ record.schedule.time }} -
+                                    {{ record.schedule.agent.name }}
+                                {% else %}
+                                    <a href="{% url 'property:schedule-appointment' record.id %}"
+                                       class="btn btn-warning">
+                                        Выбрать время для записи
+                                    </a>
+                                {% endif %}
+                            {% elif record.status == 'pending' %}
+                                Позже вам будет предложено время посещения
+                            {% else %}
+                                Вы посещали офис. Заявка закрыта
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if record.status == 'pending' %}
+                                <a href="{% url 'property:edit_home_record' record.id %}" class="btn btn-warning">Редактировать
+                                    заявку</a>
+                            {% else %}
+                                Редактирование не доступно
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'base_layout/layout.html' %}
 {% load static %}
 
 
@@ -841,7 +841,7 @@
 {% block header %}
     <header id="header" class="header fixed-top">
         <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-            <a href="{% url 'main_layout' %}" class="logo d-flex align-items-center">
+            <a href="{% url 'authorization:main_layout' %}" class="logo d-flex align-items-center">
                 <img src="{% static 'img/logo.png' %}" alt="logo">
                 <span>ISStrah</span>
             </a>
@@ -851,7 +851,7 @@
                     <li><a class="nav-link scrollto" href="#services">Services</a></li>
                     {% comment %} <li><a class="nav-link scrollto" href="#portfolio">Portfolio</a></li>{% endcomment %}
                     <li><a class="nav-link scrollto" href="#FAQ">FAQ</a></li>
-                    <li><a class="getstarted scrollto" href="{% url 'login' %}">Get Started</a></li>
+                    <li><a class="getstarted scrollto" href="{% url 'authorization:login' %}">Get Started</a></li>
                 </ul>
                 <i class="bi bi-list mobile-nav-toggle"></i>
             </nav>
@@ -863,9 +863,7 @@
 {% block content %}
     <section id="about" class="about">
         <div class="container" data-aos="fade-up">
-
             <div class="row gx-0">
-
                 <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
                     <div class="content">
                         <h3>О нас</h3>

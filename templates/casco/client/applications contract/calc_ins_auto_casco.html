@@ -1,0 +1,252 @@
+{% extends 'base_layout/layout.html' %}
+{% load static %}
+
+{% block styles %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        body {
+            font-family: "Montserrat", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url("{% static 'img/LightCar.png' %}");
+            background-size: cover;
+        }
+
+        .ui-slider-handle {
+            width: 1em;
+            height: 1em;
+            top: 50%;
+            margin-top: -.5em;
+        }
+
+        .form_calculates {
+            width: 400px;
+            max-width: 500px;
+            margin-top: 50px;
+            padding: 35px;
+            border-radius: 25px;
+            background-color: #e1e4f5;
+            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+            border: #d4dcfa 1px solid;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            line-height: 1.25;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+        .form_calculate label {
+            display: block;
+            color: #000000;
+            font-size: 1rem;;
+            margin-bottom: 5px;
+        }
+
+        .form_calculate input[type="text"],
+        .form_calculate input[type="email"],
+        .form_calculate input[type="password"],
+        .form_calculate input[type="number"],
+        .form_calculate select,
+        .form_calculate select option {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 0;
+            background-color: #ffffff;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.875rem;
+            color: #000000;
+        }
+
+        .button-center {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        button {
+            background: #4154f1;
+            padding: 8px 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            color: #fff;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        @media screen and (max-width: 1366px) {
+            form {
+                padding: 25px; /* Уменьшаем отступы формы для экранов ноутбуков */
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block header %}
+    {% include 'users/client/header.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="form_calculates">
+        <h1>КАСКО</h1>
+        <form method="post">
+            {% csrf_token %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ form.brand.label_tag }}
+                    {{ form.brand }}
+                </div>
+                <div class="form-group">
+                    {{ form.model_name.label_tag }}
+                    {{ form.model_name }}
+                </div>
+                <div class="form-group">
+                    {{ form.year.label_tag }}
+                    {{ form.year }}
+                </div>
+                <div class="form-group">
+                    {{ form.horsepower.label_tag }}
+                    {{ form.horsepower }}
+                </div>
+                <div class="form-group">
+                    {{ form.age.label_tag }}
+                    {{ form.age }}
+                </div>
+                <div class="form-group">
+                    {{ form.experience.label_tag }}
+                    {{ form.experience }}
+                </div>
+                <div class="form-group">
+                    {{ form.coverage.label_tag }}
+                    {{ form.coverage }}
+                </div>
+                <div class="form-group">
+                    {{ form.repair_type.label_tag }}
+                    {{ form.repair_type }}
+                </div>
+                <div class="form-group">
+                    {{ form.mileage.label_tag }}
+                    {{ form.mileage }}
+                </div>
+                <div class="form-group">
+                    {{ form.cost_guarantee.label_tag }}
+                    {{ form.cost_guarantee }}
+                </div>
+                <div class="form-group">
+                    {{ form.car_cost.label_tag }}
+                    {{ form.car_cost }}
+                </div>
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
+        </form>
+        {% if insurance_cost is not None %}
+            <h2>Стоимость КАСКО: {{ insurance_cost }} руб.</h2>
+            <form method="post" action="{% url 'casco:create_casco_record' %}">
+                {% csrf_token %}
+                <input type="hidden" name="brand" value="{{ form.cleaned_data.brand.pk }}">
+                <input type="hidden" name="model_name" value="{{ form.cleaned_data.model_name }}">
+                <input type="hidden" name="year" value="{{ form.cleaned_data.year }}">
+                <input type="hidden" name="horsepower" value="{{ form.cleaned_data.horsepower }}">
+                <input type="hidden" name="number_of_drivers" value="{{ form.cleaned_data.number_of_drivers }}">
+                <input type="hidden" name="age" value="{{ form.cleaned_data.age }}">
+                <input type="hidden" name="experience" value="{{ form.cleaned_data.experience }}">
+                <input type="hidden" name="coverage" value="{{ form.cleaned_data.coverage }}">
+                <input type="hidden" name="repair_type" value="{{ form.cleaned_data.repair_type }}">
+                <input type="hidden" name="mileage" value="{{ form.cleaned_data.mileage }}">
+                <input type="hidden" name="cost_guarantee" value="{{ form.cleaned_data.cost_guarantee }}">
+                <input type="hidden" name="car_cost" value="{{ form.cleaned_data.car_cost }}">
+                <input type="hidden" name="insurance_cost" value="{{ insurance_cost }}">
+                <button type="submit">Создать запись</button>
+            </form>
+        {% endif %}
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#id_brand').change(function () {
+                var url = '{% url "osago:load_models" %}';
+                var brandId = $(this).val();
+                $.ajax({
+                    url: url,
+                    data: {
+                        'brand': brandId
+                    },
+                    success: function (data) {
+                        $("#id_model_name").html('');
+                        $("#id_year").html('');
+                        $("#id_horsepower").html('');
+                        $.each(data, function (key, value) {
+                            $("#id_model_name").append('<option value="' + value.model_name + '">' + value.model_name + '</option>');
+                        });
+                    }
+                });
+            });
+
+            $('#id_model_name').change(function () {
+                var url = '{% url "osago:load_years" %}';
+                var brandId = $('#id_brand').val();
+                var modelName = $(this).val();
+                $.ajax({
+                    url: url,
+                    data: {
+                        'brand': brandId,
+                        'model_name': modelName
+                    },
+                    success: function (data) {
+                        $("#id_year").html('');
+                        $("#id_horsepower").html('');
+                        $.each(data, function (key, value) {
+                            $("#id_year").append('<option value="' + value.year + '">' + value.year + '</option>');
+                        });
+                    }
+                });
+            });
+
+            $('#id_year').change(function () {
+                var url = '{% url "osago:load_horsepowers" %}';
+                var brandId = $('#id_brand').val();
+                var modelName = $('#id_model_name').val();
+                var year = $(this).val();
+                $.ajax({
+                    url: url,
+                    data: {
+                        'brand': brandId,
+                        'model_name': modelName,
+                        'year': year
+                    },
+                    success: function (data) {
+                        $("#id_horsepower").html('');
+                        $.each(data, function (key, value) {
+                            $("#id_horsepower").append('<option value="' + value.horsepower + '">' + value.horsepower + '</option>');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

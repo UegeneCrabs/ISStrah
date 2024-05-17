@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'base_layout/layout.html' %}
 
 
 {% load static %}
@@ -135,12 +135,12 @@
         </div>
         <hr class='hr-line'>
         <div class="login-prompt">
-            <p class="login-text">Нет аккаунта? <a class="login-link" href="{% url 'register_client' %}">Зарегистрироваться</a>
+            <p class="login-text">Нет аккаунта? <a class="login-link" href="{% url 'authorization:register_client' %}">Зарегистрироваться</a>
             </p>
         </div>
         <br>
         <div class="login-prompt">
-            <p class="login-text"><a class="login-link" href="{% url 'main_layout' %}">Главная</a>
+            <p class="login-text"><a class="login-link" href="{% url 'authorization:main_layout' %}">Главная</a>
             </p>
         </div>
     </form>

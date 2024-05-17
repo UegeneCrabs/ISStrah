@@ -35,8 +35,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main.apps.MainConfig',
-    'client.apps.ClientConfig',
+    'src.authorization.apps.MainConfig',
+    'src.users.apps.ClientConfig',
+    'src.casco.apps.CascoConfig',
+    'src.osago.apps.OsagoConfig',
+    'src.life.apps.LifeConfig',
+    'src.property.apps.PropertyConfig',
 ]
 
 MIDDLEWARE = [
@@ -56,8 +60,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
-            # os.path.join(BASE_DIR, r'C:\Users\yevge\PycharmProjects\ISStrah\client\templates'),
-            # os.path.join(BASE_DIR, r'C:\Users\yevge\PycharmProjects\ISStrah\main\templates'),
+            # os.path.join(BASE_DIR, r'C:\Users\yevge\PycharmProjects\ISStrah\users\templates'),
+            # os.path.join(BASE_DIR, r'C:\Users\yevge\PycharmProjects\ISStrah\authorization\templates'),
         ]
         ,
         'APP_DIRS': True,
@@ -104,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
-AUTH_USER_MODEL = 'main.CustomUser'
+AUTH_USER_MODEL = 'authorization.CustomUser'
 
 LANGUAGE_CODE = 'ru'
 
@@ -131,4 +135,4 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-LOGOUT_REDIRECT_URL = 'main_layout'
+LOGOUT_REDIRECT_URL = 'authorization:main_layout'

@@ -1,0 +1,65 @@
+body {
+    min-height: 100vh;
+    background: url("{% static 'img/Pattern4.png' %}");
+    background-size: cover;
+    margin-top: 60px;
+    padding: 0 40px;
+}
+
+.payment-list {
+    margin-top: 100px;
+    margin-bottom: 40px;
+}
+
+.payment-list-container {
+    max-height: 470px; /* Максимальная высота контейнера */
+    overflow-y: auto; /* Добавить скроллер только в случае необходимости */
+    border: 1px solid #ccc; /* Граница контейнера */
+    border-radius: 10px;
+    background-color: #e1e4f5; /* Цвет фона формы */
+    box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
+    padding: 10px; /* Закругление углов контейнера */
+    margin-left: 20px;
+    width: 1000px;
+}
+
+/* Стили для самого скроллера */
+.payment-list-container::-webkit-scrollbar {
+    width: 10px; /* Ширина скроллера */
+}
+
+/* Стили для полосы скроллера */
+.payment-list-container::-webkit-scrollbar-thumb {
+    background-color: #888; /* Цвет полосы скроллера */
+    border-radius: 5px; /* Закругление углов полосы скроллера */
+}
+
+/* Стили для трека скроллера (фоновая область) */
+.payment-list-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Цвет фоновой области трека скроллера */
+    border-radius: 5px; /* Закругление углов трека скроллера */
+}
+
+.payment-list-container table {
+    width: 100%; /* Ширина таблицы */
+    border-collapse: collapse; /* Схлопывание границ ячеек */
+}
+
+/* Стили для ячеек заголовков таблицы */
+.payment-list-container th {
+    border: 1px solid #949494; /* Граница ячеек заголовков таблицы */
+    padding: 8px; /* Внутренние отступы ячеек заголовков таблицы */
+    text-align: left; /* Выравнивание текста по левому краю */
+}
+
+/* Стили для ячеек содержимого таблицы */
+.payment-list-container td {
+    border: 1px solid #949494; /* Граница ячеек содержимого таблицы */
+    padding: 8px; /* Внутренние отступы ячеек содержимого таблицы */
+    text-align: left; /* Выравнивание текста по левому краю */
+}
+
+.firrow {
+    display: flex;
+    margin-bottom: 20px;
+}

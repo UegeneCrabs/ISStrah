@@ -1,0 +1,174 @@
+{% extends 'base_layout/layout.html' %}
+{% load static %}
+
+
+{% block styles %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+    {% include 'users/agent/header_agent.html' %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="payment-list">
+        <div class="firrow">
+            <div class="payment-list-container">
+                <p>КАСКО</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Документ</th>
+                        <th>Количество копий</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Паспорт или иной документ, удостоверяющий личность владельца автомобиля</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Технический паспорт автомобиля</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Документ, подтверждающий право собственности на автомобиль (свидетельство о праве
+                            собственности,
+                            договор купли-продажи и т. д.)
+                        </td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Справка об отсутствии долгов по штрафам и налогам на автомобиль</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Документы, подтверждающие наличие систем безопасности (если применимо)</td>
+                        <td>1 копия</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="payment-list-container">
+                <p>Страхование здоровья</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Документ</th>
+                        <th>Количество копий</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Паспорт или иной документ, удостоверяющий личность застрахованного</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Свидетельство о рождении или другой документ, подтверждающий возраст застрахованного</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Полис обязательного медицинского страхования (если применимо)</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Медицинская карта или история заболеваний застрахованного</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Документы, подтверждающие семейное положение и иждивенцев (если применимо)</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Документы о доходах (если требуется для расчета страхового взноса)</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Другие медицинские документы или справки по запросу страховой компании</td>
+                        <td>Согласно требованию</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="firrow">
+            <div class="payment-list-container">
+                <p>Обращение по страховому случаю (авария)</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Документ</th>
+                        <th>Количество копий</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Заявление о страховом случае (заполняется в страховой компании)</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Протокол ДТП (полученный на месте происшествия)</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Копии водительского удостоверения и технического паспорта автомобиля</td>
+                        <td>1 копия каждого</td>
+                    </tr>
+                    <tr>
+                        <td>Документы о медицинской помощи (если есть травмы)</td>
+                        <td>По необходимости</td>
+                    </tr>
+                    <tr>
+                        <td>Фотографии повреждений автомобиля и места происшествия</td>
+                        <td>По необходимости</td>
+                    </tr>
+                    <tr>
+                        <td>Свидетельские показания (если есть)</td>
+                        <td>По необходимости</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="payment-list-container">
+                <p>Обращение по страховому случаю (травма)</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Документ</th>
+                        <th>Количество копий</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Заявление о страховом случае (заполняется в страховой компании)</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Медицинская справка или иной медицинский документ, подтверждающий травму</td>
+                        <td>1 копия</td>
+                    </tr>
+                    <tr>
+                        <td>Фотографии травмы, если применимо</td>
+                        <td>По необходимости</td>
+                    </tr>
+                    <tr>
+                        <td>Другие медицинские документы и справки, по требованию страховой компании</td>
+                        <td>Согласно требованию</td>
+                    </tr>
+                    <tr>
+                        <td>Документы, подтверждающие расходы на лечение и реабилитацию</td>
+                        <td>По необходимости</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

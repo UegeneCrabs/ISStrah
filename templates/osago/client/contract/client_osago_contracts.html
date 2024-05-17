@@ -1,0 +1,149 @@
+{% extends 'base_layout/layout.html' %}
+{% load static %}
+
+{% block styles %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        body {
+            font-family: "Montserrat", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url("{% static 'img/LightCar.png' %}");
+            background-size: cover;
+        }
+
+        .ui-slider-handle {
+            width: 1em;
+            height: 1em;
+            top: 50%;
+            margin-top: -.5em;
+        }
+
+        .form_calculates {
+            width: 400px;
+            max-width: 500px;
+            margin-top: 50px;
+            padding: 35px;
+            border-radius: 25px;
+            background-color: #e1e4f5;
+            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+            border: #d4dcfa 1px solid;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            line-height: 1.25;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+        }
+        .form_calculate label {
+            display: block;
+            color: #000000;
+            font-size: 1rem;;
+            margin-bottom: 5px;
+        }
+
+        .form_calculate input[type="text"],
+        .form_calculate input[type="email"],
+        .form_calculate input[type="password"],
+        .form_calculate input[type="number"],
+        .form_calculate select,
+        .form_calculate select option {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 0;
+            background-color: #ffffff;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.875rem;
+            color: #000000;
+        }
+
+        .button-center {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        button {
+            background: #4154f1;
+            padding: 8px 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            color: #fff;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        @media screen and (max-width: 1366px) {
+            form {
+                padding: 25px; /* Уменьшаем отступы формы для экранов ноутбуков */
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block header %}
+    {% include 'users/client/header.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+    <h1>Договоры по ОСАГО</h1>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Агент</th>
+            <th>Марка автомобиля</th>
+            <th>Модель автомобиля</th>
+            <th>Лошадиные силы</th>
+            <th>Возраст</th>
+            <th>Стаж</th>
+            <th>Стоимость страховки</th>
+            <th>Дата заключения</th>
+            <th>Начало действия</th>
+            <th>Конец действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for contract in contracts %}
+            <tr>
+                <td>{{ contract.agent.name }}</td>
+                <td>{{ contract.osago_record.car_model.brand.name }}</td>
+                <td>{{ contract.osago_record.car_model.model_name }}</td>
+                <td>{{ contract.osago_record.car_model.horsepower }}</td>
+                <td>{{ contract.osago_record.age }}</td>
+                <td>{{ contract.osago_record.experience }}</td>
+                <td>{{ contract.osago_record.insurance_cost }}</td>
+                <td>{{ contract.conclusion_date }}</td>
+                <td>{{ contract.start_date }}</td>
+                <td>{{ contract.end_date }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

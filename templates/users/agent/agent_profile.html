@@ -1,0 +1,205 @@
+{% extends 'base_layout/layout.html' %}
+
+{% load static %}
+
+
+{% block styles %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <style>
+        body {
+            background: #F8F9FA;
+            margin-top: 100px;
+            background: url("{% static 'img/Pattern4.png' %}");
+            background-size: cover;
+        }
+
+        .content {
+            margin: 120px 50px 100px;
+            border-radius: 25px;
+            background-color: rgba(107, 121, 232, 0.6);
+            border: 1px solid #b8c1fc;
+            box-shadow: 5px 5px 50px 31px rgba(0, 85, 150, 0.2);
+        }
+
+        .profile {
+            margin-top: 20px;
+            margin-left: 30px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .profile-object {
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #b8c1fc;
+            border-radius: 15px;
+            box-shadow: 5px 5px 50px 2px rgba(0, 85, 150, 0.2);
+        }
+
+        .profile-name {
+            display: table;
+        }
+
+        .profile-name h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #313131;
+        }
+
+        .profile-image {
+            width: 400px;
+            height: 400px;
+        }
+
+        .profile-image img {
+            width: 370px;
+            border-radius: 10px;
+        }
+
+        .profile-main {
+            margin-top: 20px;
+            display: flex;
+        }
+
+        .profile-info {
+            display: flex;
+            max-width: 550px;
+            width: 550px;
+        }
+
+        .user-text p:last-child {
+            margin-bottom: 0;
+
+        }
+
+        .profile-info-main {
+            width: 500px;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+
+        }
+
+        .profiles {
+            max-width: 600px;
+            width: 600px;
+            display: grid; /* Используем grid layout */
+            grid-template-columns: repeat(2, 1fr); /* Два столбца равной ширины */
+        }
+
+        .profile-additional {
+            margin-top: 20px;
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .profile_low {
+            max-width: 1200px;
+            width: 1200px;
+            display: grid; /* Используем grid layout */
+            grid-template-columns: repeat(2, 1fr); /* Два столбца равной ширины */
+        }
+    </style>
+{% endblock %}
+
+{% block header %}
+    {% include 'users/agent/header_agent.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <div class="profiles">
+            <div class="profile">
+                <div class="profile-name profile-object"><h1>{{ user.surname }} {{ user.name }}</h1>
+                </div>
+                <div class="profile-main">
+                    <div class="profile-image profile-object">
+                        <img src="{% static 'img/avatar.jpg' %}">
+                    </div>
+                </div>
+                <div class="profile-additional">
+                    <div class="profile-info">
+                        <div class="profile-info-main profile-object">
+                            <div class="user-text">
+                                <p><strong>Email:</strong> {{ user.email }}</p>
+                                <p><strong>Номер телефона:</strong> {{ user.phone_number }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile">
+                <div class="profile_low">
+                    <div class="profile-additional">
+                        <div class="profile-info">
+                            <div class="profile-info-main profile-object">
+                                <div class="user-text">
+                                    <h3>КАСКО</h3>
+                                    <p>
+                                        <strong>Понимание потребностей клиента:</strong> Выясните, какие транспортные
+                                        средства он
+                                        собирается застраховать, и какие именно риски он хочет покрыть.</p>
+                                    <p>
+                                        <strong>Поясните возможные варианты покрытия:</strong> Объясните клиенту
+                                        различные варианты
+                                        страхования, включая страхование от ущерба, угона, стекол и т. д.</p>
+                                    <p>
+                                        <strong>Оценка стоимости транспортного средства:</strong> Помогите клиенту
+                                        определить стоимость
+                                        транспортного средства и подберите соответствующую страховую сумму.</p>
+                                    <p>
+                                        <strong>Рассмотрите возможные дополнительные покрытия:</strong> Предложите
+                                        клиенту рассмотреть
+                                        дополнительные опции, такие как страхование от несчастных случаев для
+                                        пассажиров, страхование от натуральных бедствий и т. д.</p>
+                                    <p>
+                                        <strong>Помогите заполнить все необходимые формы и документы:</strong> Объясните
+                                        клиенту, как
+                                        заполнить заявление на страхование и другие необходимые документы.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-additional">
+                        <div class="profile-info">
+                            <div class="profile-info-main profile-object">
+                                <div class="user-text">
+                                    <h3>Здоровье</h3>
+                                    <p>
+                                        <strong>Изучите потребности клиента:</strong> Выясните, какие медицинские услуги
+                                        и процедуры клиент хотел бы включить в свой план страхования.</p>
+                                    <p>
+                                        <strong>Объясните типы покрытия:</strong> Поясните клиенту различные виды
+                                        страхования здоровья, такие как страхование от несчастных случаев, страхование
+                                        от критических заболеваний, страхование от стационарного лечения и т. д.
+                                    </p>
+                                    <p>
+                                        <strong>Уточните детали плана страхования:</strong> Обсудите с клиентом
+                                        дополнительные условия и
+                                        ограничения плана страхования, включая суммы покрытия, сроки и исключения.</p>
+                                    <p>
+                                        <strong>Обратите внимание на сеть медицинских учреждений:</strong> ППредоставьте
+                                        информацию о
+                                        медицинских учреждениях, с которыми сотрудничает страховая компания, чтобы
+                                        клиент
+                                        мог получить качественное медицинское обслуживание.</p>
+                                    <p>
+                                        <strong> Помогите с оформлением документации:</strong> Помогите клиенту
+                                        заполнить необходимые формы и
+                                        документы для оформления страхового полиса здоровья.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

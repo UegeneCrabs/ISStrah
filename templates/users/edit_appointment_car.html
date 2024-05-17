@@ -1,0 +1,236 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать заявку</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <style>
+        body {
+            font-family: "Montserrat", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url("{% static 'img/LightCar.png' %}");
+            background-size: cover;
+        }
+
+        .form_calculates {
+            width: 400px;
+            max-width: 500px;
+            margin-top: 50px;
+            padding: 35px;
+            border-radius: 25px;
+            background-color: #e1e4f5;
+            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+            border: #d4dcfa 1px solid;
+        }
+
+        .form_calculate label {
+            display: block;
+            color: #000000;
+            font-size: 1rem;;
+            margin-bottom: 5px;
+        }
+
+        .form_calculate input[type="text"],
+        .form_calculate input[type="email"],
+        .form_calculate input[type="password"],
+        .form_calculate input[type="number"],
+        .form_calculate select,
+        .form_calculate select option {
+            width: 100%;
+            padding: 6px;
+            border-radius: 5px;
+            border: 0;
+            background-color: #ffffff;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.875rem;
+            color: #000000;
+        }
+
+        .button-center {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        button {
+            background: #4154f1;
+            padding: 5px 15px;
+            border-radius: 5px;
+            border: none;
+            font-size: 14px;
+            color: #fff;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        @media screen and (max-width: 1366px) {
+            form {
+                padding: 25px; /* Уменьшаем отступы формы для экранов ноутбуков */
+            }
+        }
+    </style>
+</head>
+<body>
+{% include 'users/client/header.html' %}
+
+<div class="form_calculates">
+    <form method="post">
+        {% csrf_token %}
+        <div class="form_calculate">
+            <p>
+                <label for="id_brand">Марка авто:</label>
+                <input type="text" name="brand" value={{ appointment.brand }} maxlength="100" required="" id="id_brand">
+            </p>
+        </div>
+        <div class="form_calculate">
+            <p>
+                <label for="id_model">Модель авто:</label>
+                <input type="text" name="model" value={{ appointment.model }} maxlength="100" required="" id="id_model">
+            </p>
+        </div>
+        <div class="form_calculate">
+            <p>
+                <label for="id_car_year">Год выпуска:</label>
+                <input type="number" name="car_year" value={{ appointment.car_year }} required="" id="id_car_year">
+            </p>
+        </div>
+        <div class="form_calculate">
+
+
+            <p>
+                <label for="id_horse_power">Лошадиные силы:</label>
+                <input type="number" name="horse_power" value={{ appointment.horse_power }} required=""
+                       id="id_horse_power">
+            </p>
+        </div>
+        <div class="form_calculate">
+
+            <p>
+                <label for="id_driver_option">Количество лиц допущенных к управлению:</label>
+                <select name="driver_option" required="" id="id_driver_option">
+                    <option value="">---------</option>
+                    <option value="one_person" {% if appointment.driver_option == 'one_person' %} selected {% endif %}>
+                        Один
+                        человек
+                    </option>
+                    <option value="unlimited" {% if appointment.driver_option == 'unlimited' %} selected {% endif %}>
+                        Неограниченное количество
+                    </option>
+                </select>
+            </p>
+        </div>
+
+        <div class="form_calculate">
+
+            <p>
+                <label for="id_age">Возраст:</label>
+                <input type="number" name="age" value="21" required="" id="id_age">
+            </p>
+        </div>
+
+        <div class="form_calculate">
+
+            <p>
+                <label for="id_experience">Стаж:</label>
+                <input type="number" name="experience" value="3" required="" id="id_experience">
+            </p>
+        </div>
+
+        <div class="form_calculate">
+
+            <p>
+                <label for="id_insurance_cost">Стоимость страховки:</label>
+                <span id="insurance_cost">{{ appointment.insurance_cost }}</span>
+            </p>
+        </div>
+        <div class='button-center'>
+            <button type="submit">Сохранить изменения</button>
+        </div>
+
+    </form>
+    <form method="post" action="{% url 'delete_appointment_car' appointment.id %}">
+        {% csrf_token %}
+        <div class='button-center'>
+            <button type="submit">Удалить заявку</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Функция для пересчета стоимости страховки
+        function recalculateInsuranceCost() {
+            var horse_power = parseFloat($('#id_horse_power').val());
+            var driver_option = $('#id_driver_option').val();
+            var age = parseFloat($('#id_age').val());
+            var experience = parseFloat($('#id_experience').val());
+
+            var tb = 5000;
+            var kt = 1.8;
+            var dos = 1.8;
+            var km = 1.6;
+            var kvs = 1.8;
+
+            if (driver_option == 'one_person') {
+                dos = 1;
+            } else {
+                dos = 1.8;
+            }
+
+            if (horse_power < 50) {
+                km = 0.6;
+            } else if (horse_power < 70) {
+                km = 1;
+            } else if (horse_power < 100) {
+                km = 1.1;
+            } else if (horse_power < 120) {
+                km = 1.2;
+            } else if (horse_power < 150) {
+                km = 1.4;
+            } else {
+                km = 1.6;
+            }
+
+            // Расчет коэффициента возраста и стажа (КВС)
+            if (age <= 22 && experience <= 3) {
+                kvs = 1.8;
+            } else if (age > 22 && experience <= 3) {
+                kvs = 1.7;
+            } else if (age <= 22 && experience > 3) {
+                kvs = 1.6;
+            } else {
+                kvs = 1;
+            }
+
+            var insuranceCost = tb * kt * km * kvs * dos;
+
+            // Обновляем значение стоимости страховки на странице
+            $('#insurance_cost').text(insuranceCost.toFixed(2));
+        }
+
+        // Вызываем функцию при загрузке страницы
+        recalculateInsuranceCost();
+
+        // Добавляем обработчики событий для полей формы
+        $('#id_experience, #id_age, #id_driver_option, #id_horse_power').on('change', function () {
+            recalculateInsuranceCost();
+        });
+    });
+</script>
+</body>
+</html>
