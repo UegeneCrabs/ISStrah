@@ -1,10 +1,152 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base_layout/layout.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block styles %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        body {
+            font-family: "Montserrat", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url("{% static 'img/LightCar.png' %}");
+            background-size: cover;
+        }
+
+        .form_calculates {
+            margin: 0 auto;
+            padding: 35px;
+            border-radius: 25px;
+            background-color: #e1e4f5;
+            box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
+            border: #d4dcfa 1px solid;
+            max-width: 95%;
+        }
+
+        .containers {
+            overflow-x: scroll;
+        }
+
+
+
+        .form_calculate label {
+            display: block;
+            color: #000000;
+            font-size: 1rem;;
+            margin-bottom: 5px;
+        }
+
+        .form_calculate input[type="text"],
+        .form_calculate input[type="email"],
+        .form_calculate input[type="password"],
+        .form_calculate input[type="number"],
+        .form_calculate select,
+        .form_calculate select option {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 0;
+            background-color: #ffffff;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.875rem;
+            color: #000000;
+        }
+
+
+        button {
+            background: #4154f1;
+            padding: 8px 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            color: #fff;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        @media screen and (max-width: 1366px) {
+            form {
+                padding: 25px; /* Уменьшаем отступы формы для экранов ноутбуков */
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block header %}
+    {% include 'users/agent/header_agent.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="form_calculates">
+
+        <div class="containers">
+            <h1>Договоры по страхованию квартир</h1>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Агент</th>
+                    <th>Клиент</th>
+                    <th>Адрес</th>
+                    <th>Стоимость страховки</th>
+                    <th>Внутренняя отделка</th>
+                    <th>Конструктивные элементы</th>
+                    <th>Гражданская ответственность</th>
+                    <th>Домашнее имущество</th>
+                    <th>Дополнительная защита</th>
+                    <th>Риск военных действий</th>
+                    <th>Ответственность перед соседями</th>
+                    <th>Воздействие атмосферных осадков</th>
+                    <th>Дата заключения</th>
+                    <th>Начало действия</th>
+                    <th>Конец действия</th>
+                    <th>Осталось дней</th>
+                    <th>PDF</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for contract in contracts %}
+                    <tr>
+                        <td>{{ contract.agent.name }}</td>
+                        <td>{{ contract.record.client.surname }} {{ contract.record.client.name }}
+                            {{ contract.record.client.secondname }}</td>
+                        <td>г.{{ contract.record.city }}, ул.{{ contract.record.street }}, д.{{ contract.record.house }},
+                            кв.{{ contract.record.apartment }}</td>
+                        <td>{{ contract.record.insurance_cost }}</td>
+                        <td>{{ contract.record.get_interior_finish_display }}</td>
+                        <td>{{ contract.record.get_structural_elements_display }}</td>
+                        <td>{{ contract.record.get_civil_liability_display }}</td>
+                        <td>{{ contract.record.get_household_property_display }}</td>
+                        <td>{{ contract.record.additional_protection|yesno:"Включено,Не включено" }}</td>
+                        <td>{{ contract.record.war_risk|yesno:"Включено,Не включено" }}</td>
+                        <td>{{ contract.record.neighbor_repair_liability|yesno:"Включено,Не включено" }}</td>
+                        <td>{{ contract.record.atmospheric_impact|yesno:"Включено,Не включено" }}</td>
+                        <td>{{ contract.conclusion_date }}</td>
+                        <td>{{ contract.start_date }}</td>
+                        <td>{{ contract.end_date }}</td>
+                        <td>{{ contract.days_left }}</td>
+                        <td>
+                            <a href="{% url 'property:generate_pdf' contract.id %}" target="_blank"
+                               class="btn btn-primary">Скачать
+                                PDF</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

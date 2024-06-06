@@ -22,14 +22,13 @@
         }
 
         .form_calculates {
-            width: 400px;
-            max-width: 500px;
-            margin-top: 50px;
+            max-width: 600px;
             padding: 35px;
             border-radius: 25px;
             background-color: #e1e4f5;
-            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+            box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
             border: #d4dcfa 1px solid;
+            
         }
 
         .form_calculate label {
@@ -90,7 +89,7 @@
     <div class="form_calculates">
 
         <div class="container">
-            <h1>Рассчитать стоимость страхования жизни</h1>
+            <h1>Страхование жизни</h1>
             <form method="post" action="{% url 'life:life_insurance_view' %}">
                 {% csrf_token %}
                 {{ form.as_p }}
@@ -100,7 +99,6 @@
                 <h2>Стоимость страхования: {{ insurance_cost }} руб.</h2>
                 <form method="post" action="{% url 'life:create_life_insurance_record' %}">
                     {% csrf_token %}
-                    <!-- Скрытые поля для передачи данных -->
                     <input type="hidden" name="competition_participation"
                            value="{{ form.competition_participation.value }}">
                     <input type="hidden" name="additional_sports" value="{{ form.additional_sports.value }}">

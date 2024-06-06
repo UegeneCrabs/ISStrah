@@ -1,0 +1,283 @@
+{% extends 'base_layout/layout.html' %}
+{% load static %}
+
+{% block styles %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style>
+        body {
+            font-family: "Montserrat", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url("{% static 'img/LightCar.png' %}");
+            background-size: cover;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .form_calculates {
+            margin-top: 50px;
+            padding: 35px;
+            border-radius: 25px;
+            background-color: #e1e4f5;
+            box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
+            border: #d4dcfa 1px solid;
+        }
+
+        .form_calculate label {
+            display: block;
+            color: #000000;
+            font-size: 1rem;;
+            margin-bottom: 5px;
+        }
+
+        .form_calculate input[type="text"],
+        .form_calculate input[type="email"],
+        .form_calculate input[type="password"],
+        .form_calculate input[type="number"],
+        .form_calculate select,
+        .form_calculate select option {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 0;
+            background-color: #ffffff;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.875rem;
+            color: #000000;
+        }
+
+        .button-center {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        button {
+            background: #4154f1;
+            padding: 8px 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            color: #fff;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        @media screen and (max-width: 1366px) {
+            form {
+                padding: 25px; /* Уменьшаем отступы формы для экранов ноутбуков */
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block header %}
+    {% include 'users/agent/header_agent.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="form_calculates">
+        <div class="container">
+            <h2>Редактировать запись ОСАГО</h2>
+            {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="form-group">
+                    <label for="insurance_cost_display">Стоимость страховки:</label>
+                    <input type="text" id="insurance_cost_display" class="form-control" readonly>
+                </div>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
+            </form>
+            <form method="post" action="{% url 'osago:delete_osago_record' record.id %}" style="margin-top: 20px;">
+                {% csrf_token %}
+                <div class="button-center">
+                    <button type="submit" class="btn btn-danger">Удалить запись</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function calculateInsuranceCost() {
+            const horsepower = parseInt($('#id_horsepower').val()) || 0;
+            const age = parseInt($('#id_age').val()) || 0;
+            const experience = parseInt($('#id_experience').val()) || 0;
+
+            const baseRate = 0.03;
+
+            const tariff = 5000.0;
+            const kt = 1.8;
+
+            let km;
+            if (horsepower < 50) {
+                km = 0.6;
+            } else if (horsepower >= 50 && horsepower < 70) {
+                km = 1.0;
+            } else if (horsepower >= 70 && horsepower < 100) {
+                km = 1.1;
+            } else if (horsepower >= 100 && horsepower < 120) {
+                km = 1.2;
+            } else if (horsepower >= 120 && horsepower < 150) {
+                km = 1.4;
+            } else {
+                km = 1.6;
+            }
+
+            let kvs;
+            if (age <= 22 && experience <= 3) {
+                kvs = 1.8;
+            } else if (age > 22 && experience <= 3) {
+                kvs = 1.7;
+            } else if (age <= 22 && experience > 3) {
+                kvs = 1.6;
+            } else {
+                kvs = 1.0;
+            }
+
+            const insuranceCost = tariff * kt * km * kvs;
+            $('#insurance_cost_display').val(insuranceCost.toFixed(2));
+        }
+
+        $(document).ready(function () {
+            function handleAjaxError(jqXHR, textStatus, errorThrown) {
+                console.error('Error:', textStatus, errorThrown);
+                alert('Произошла ошибка при загрузке данных. Попробуйте еще раз.');
+            }
+
+            function updateModelField(brandId) {
+                var url = '{% url "casco:load_models" %}';
+                $.ajax({
+                    url: url,
+                    data: {'brand': brandId},
+                    success: function (data) {
+                        $("#id_model_name").html('<option value="">-------</option>');
+                        $("#id_year").html('<option value="">-------</option>');
+                        $("#id_horsepower").html('<option value="">-------</option>');
+                        $.each(data, function (key, value) {
+                            $("#id_model_name").append('<option value="' + value.model_name + '">' + value.model_name + '</option>');
+                        });
+                    },
+                    error: handleAjaxError
+                });
+            }
+
+            function updateYearField(brandId, modelName) {
+                var url = '{% url "casco:load_years" %}';
+                $.ajax({
+                    url: url,
+                    data: {'brand': brandId, 'model_name': modelName},
+                    success: function (data) {
+                        $("#id_year").html('<option value="">-------</option>');
+                        $("#id_horsepower").html('<option value="">-------</option>');
+                        $.each(data, function (key, value) {
+                            $("#id_year").append('<option value="' + value.year + '">' + value.year + '</option>');
+                        });
+                    },
+                    error: handleAjaxError
+                });
+            }
+
+            function updateHorsepowerField(brandId, modelName, year) {
+                var url = '{% url "casco:load_horsepowers" %}';
+                $.ajax({
+                    url: url,
+                    data: {'brand': brandId, 'model_name': modelName, 'year': year},
+                    success: function (data) {
+                        $("#id_horsepower").html('<option value="">-------</option>');
+                        $.each(data, function (key, value) {
+                            $("#id_horsepower").append('<option value="' + value.horsepower + '">' + value.horsepower + '</option>');
+                        });
+                    },
+                    error: handleAjaxError
+                });
+            }
+
+            $('#id_brand').change(function () {
+                var brandId = $(this).val();
+                updateModelField(brandId);
+            });
+
+            $('#id_model_name').change(function () {
+                var brandId = $('#id_brand').val();
+                var modelName = $(this).val();
+                updateYearField(brandId, modelName);
+            });
+
+            $('#id_year').change(function () {
+                var brandId = $('#id_brand').val();
+                var modelName = $('#id_model_name').val();
+                var year = $(this).val();
+                updateHorsepowerField(brandId, modelName, year);
+            });
+
+            // Инициализация значений при загрузке страницы
+            if ($('#id_brand').val()) {
+                updateModelField($('#id_brand').val());
+            }
+            if ($('#id_model_name').val()) {
+                updateYearField($('#id_brand').val(), $('#id_model_name').val());
+            }
+            if ($('#id_year').val()) {
+                updateHorsepowerField($('#id_brand').val(), $('#id_model_name').val(), $('#id_year').val());
+            }
+
+            // Расчет стоимости страхования при изменении любых полей, влияющих на стоимость
+            $('#id_horsepower, #id_age, #id_experience').change(calculateInsuranceCost);
+            $('#id_horsepower, #id_age, #id_experience').keyup(calculateInsuranceCost);
+
+            // Начальный расчет стоимости при загрузке страницы
+            calculateInsuranceCost();
+        });
+    </script>
+
+{% endblock %}

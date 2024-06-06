@@ -118,10 +118,23 @@ class HealthClaim(models.Model):
         return f"Обращение по страхованию здоровья #{self.id} от {self.claim_date.strftime('%Y-%m-%d')}"
 
 
+class DamageThemeLife(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Название тематики")
+
+    class Meta:
+        verbose_name = "Тема повреждения Жизнь"
+        verbose_name_plural = "Темы повреждений Жизнь"
+
+    def __str__(self):
+        return self.name
+
+
 # Оценка выплаты Жизнь
 class LifePayoutAssessment(models.Model):
     damage_character = models.TextField(verbose_name="Характер повреждения", unique=True)
     percentage_of_insurance_amount = models.FloatField(verbose_name="Процент от страховой суммы")
+    theme = models.ForeignKey(DamageThemeLife, null=True, blank=True, on_delete=models.CASCADE,
+                              verbose_name="Тематика повреждения")
 
     class Meta:
         verbose_name = "Оценка выплаты по страхованию жизни"

@@ -1,7 +1,7 @@
 from django import forms
 
-from src.property.models import HomeInsuranceRecord
-from src.users.models import AgentSchedule
+from src.property.models import HomeInsuranceRecord, HomeInsuranceClaim, HomeInsuranceContract
+from src.users.models import AgentSchedule, AppraiserSchedule
 
 
 class HomeInsuranceForm(forms.ModelForm):
@@ -123,3 +123,32 @@ class ScheduleForm(forms.Form):
         empty_label=None,
         widget=forms.Select(attrs={'class': 'form-control'})
     )
+
+
+class HomeClaimForm(forms.ModelForm):
+    class Meta:
+        model = HomeInsuranceClaim
+        fields = ['description']
+
+
+class HomeInsuranceClaimScheduleForm(forms.ModelForm):
+    class Meta:
+        model = HomeInsuranceClaim
+        fields = ['availability_id']
+        widgets = {
+            'availability_id': forms.Select(attrs={'class': 'form-control'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(HomeInsuranceClaimScheduleForm, self).__init__(*args, **kwargs)
+        self.fields['availability_id'].queryset = AppraiserSchedule.objects.filter(available=True)
+
+
+class HomeInsuranceContractForm(forms.ModelForm):
+    class Meta:
+        model = HomeInsuranceContract
+        fields = ['start_date', 'end_date']
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+        }

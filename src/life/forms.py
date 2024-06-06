@@ -1,7 +1,8 @@
 from django import forms
 
-from src.life.models import LifeInsuranceRecord
-from src.users.models import AgentSchedule
+from src.authorization.models import CustomUser
+from src.life.models import LifeInsuranceRecord, HealthClaim, LifeInsuranceContract
+from src.users.models import AgentSchedule, AppraiserSchedule
 
 
 class LifeInsuranceForm(forms.ModelForm):
@@ -19,6 +20,35 @@ class LifeInsuranceForm(forms.ModelForm):
             'sport_coverage': forms.Select(attrs={'class': 'form-control'}),
             'sum_insurance': forms.Select(attrs={'class': 'form-control'}),
         }
+
+
+class LifeInsuranceAgentForm(forms.ModelForm):
+    class Meta:
+        model = LifeInsuranceRecord
+        fields = ['client', 'availability', 'competition_participation', 'additional_sports',
+                  'insurance_duration', 'age_coefficient', 'sport_coverage', 'sum_insurance',
+                  'insurance_cost', 'status']
+        widgets = {
+            'client': forms.Select(attrs={'class': 'form-control'}),
+            'availability': forms.Select(attrs={'class': 'form-control'}),
+            'competition_participation': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'additional_sports': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'insurance_duration': forms.Select(attrs={'class': 'form-control'}),
+            'age_coefficient': forms.Select(attrs={'class': 'form-control'}),
+            'sport_coverage': forms.Select(attrs={'class': 'form-control'}),
+            'sum_insurance': forms.Select(attrs={'class': 'form-control'}),
+            'insurance_cost': forms.NumberInput(attrs={'class': 'form-control'}),
+            'status': forms.HiddenInput()  # Скрыть поле статус, так как оно уже установлено
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['availability'].queryset = AgentSchedule.objects.filter(available=True)
+        self.fields['client'].queryset = CustomUser.objects.filter(user_type='users')
+        self.fields['status'].initial = 'in_progress'
+        self.fields['insurance_cost'].widget = forms.NumberInput(
+            attrs={'class': 'form-control', 'readonly': 'readonly'})
+        self.fields['status'].widget = forms.HiddenInput()
 
 
 class LifeInsuranceSearchForm(forms.Form):
@@ -88,3 +118,32 @@ class LifeInsuranceScheduleForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(LifeInsuranceScheduleForm, self).__init__(*args, **kwargs)
         self.fields['availability'].queryset = AgentSchedule.objects.filter(available=True)
+
+
+class LifeClaimForm(forms.ModelForm):
+    class Meta:
+        model = HealthClaim
+        fields = ['description']
+
+
+class HealthClaimScheduleForm(forms.ModelForm):
+    class Meta:
+        model = HealthClaim
+        fields = ['schedule']
+        widgets = {
+            'schedule': forms.Select(attrs={'class': 'form-control'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(HealthClaimScheduleForm, self).__init__(*args, **kwargs)
+        self.fields['schedule'].queryset = AppraiserSchedule.objects.filter(available=True)
+
+
+class LifeInsuranceContractForm(forms.ModelForm):
+    class Meta:
+        model = LifeInsuranceContract
+        fields = ['start_date', 'end_date']
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+        }

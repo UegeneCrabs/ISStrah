@@ -93,10 +93,23 @@ class CascoContract(models.Model):
         return f"Casco {self.id} from {self.start_date} to {self.end_date}"
 
 
+class DamageTheme(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Название тематики")
+
+    class Meta:
+        verbose_name = "Тема повреждения КАСКО"
+        verbose_name_plural = "Темы повреждений КАСКО"
+
+    def __str__(self):
+        return self.name
+
+
 # Оценка выплаты Каско
 class CascoPayoutAssessment(models.Model):
-    damage_character = models.TextField(verbose_name="Характер повреждения")
+    damage_character = models.TextField(verbose_name="Характер повреждения", unique=True)
     percentage_of_insurance_amount = models.FloatField(verbose_name="Процент от страховой суммы")
+    theme = models.ForeignKey(DamageTheme, null=True, blank=True, on_delete=models.CASCADE,
+                              verbose_name="Тематика повреждения")
 
     class Meta:
         verbose_name = "Оценка выплаты Каско"

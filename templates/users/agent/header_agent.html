@@ -197,9 +197,10 @@
 
 <header id="header" class="header fixed-top">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
-        <a href="{% url 'personalaccountemployee' %}" class="logo d-flex align-items-center">
+        <a href="{% url 'users:personal_account_agent' %}" class="logo d-flex align-items-center">
             <img src="{% static 'img/logo.png' %}" alt="logo">
-            <span>ISStrah </span><p>for Employee</p>
+            <span>ISStrah </span>
+            <p>for Employee</p>
         </a>
         <nav id="navbar" class="navbar">
             <ul>
@@ -208,10 +209,11 @@
                     <div class="dropdown">
                         <span>Заявки на составление договора</span>
                         <div class="dropdown-content">
-                            <a href="{% url 'agent_requests_health' %}">Заявки на страхование жизни</a>
-                            <a href="{% url 'agent_requests_osago' %}">Заявки на ОСАГО</a>
-                            <a href="{% url 'agent_requests_casco' %}">Заявки на КАСКО</a>
-                            <a href="{% url 'agent_requests_home' %}">Заявки на страхование квартиры</a>
+                            <a href="{% url 'life:agent_requests_health' %}">Заявки на страхование жизни</a>
+                            <a href="{% url 'osago:agent_requests_osago' %}">Заявки на ОСАГО</a>
+                            <a href="{% url 'casco:agent_casco_requests' %}">Заявки на КАСКО</a>
+                            <a href="{% url 'property:agent_home_insurance_requests' %}">Заявки на страхование
+                                квартиры</a>
                         </div>
                     </div>
                 </li>
@@ -219,19 +221,19 @@
                     <div class="dropdown">
                         <span>Договора</span>
                         <div class="dropdown-content">
-                            <a href="{% url 'agent_health_contracts' %}">Жизнь</a>
-                            <a href="{% url 'agent_osago_contracts' %}">ОСАГО</a>
-                            <a href="{% url 'agent_casco_contracts' %}">КАСКО</a>
-                            <a href="{% url 'agent_home_contracts' %}">Квартира</a>
+                            <a href="{% url 'life:agent_life_contracts' %}">Жизнь</a>
+                            <a href="{% url 'osago:agent_osago_contracts' %}">ОСАГО</a>
+                            <a href="{% url 'casco:agent_casco_contracts' %}">КАСКО</a>
+                            <a href="{% url 'property:agent_home_insurance_contracts' %}">Квартира</a>
 
                         </div>
                     </div>
                 </li>
                 <li>
-                    <a style="font-weight: 700; " href="{% url 'agent_profile' %}">{{ user.username }}</a>
+                    <a style="font-weight: 700; " href="#">{{ user.username }}</a>
                 </li>
                 <li>
-                    <form action="{% url 'logout' %}" method="post">
+                    <form action="{% url 'authorization:logout' %}" method="post">
                         {% csrf_token %}
                         <button style="background: #4154f1; padding: 8px 20px; border-radius: 4px; margin-left: 30px; color: #fff; border: none;"
                                 type="submit">Logout

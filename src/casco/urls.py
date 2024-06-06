@@ -16,4 +16,14 @@ urlpatterns = [
     path('delete_casco_record/<int:record_id>/', views.delete_casco_record, name='delete_casco_record'),
     path('schedule-casco-appointment/<int:record_id>/', views.schedule_casco_appointment,
          name='schedule_casco_appointment'),
+    path('create-casco-claim/<int:contract_id>/', views.create_casco_claim, name='create_casco_claim'),
+    path('edit-casco-claim/<int:claim_id>/', views.edit_casco_claim, name='edit_casco_claim'),
+    path('choose-appraiser-schedule/<int:claim_id>/', views.choose_appraiser_schedule,
+         name='choose_appraiser_schedule'),
+    path('generate_pdf/<int:contract_id>', views.generate_pdf, name='generate_pdf'),
+    path('agent_casco_requests/', views.agent_casco_requests, name='agent_casco_requests'),
+
+    path('create_casco_contract/<int:casco_record_id>/', views.create_casco_contract, name='create_casco_contract'),
+    path('casco/agent/contracts/', views.agent_casco_contracts, name='agent_casco_contracts'),
+
 ]

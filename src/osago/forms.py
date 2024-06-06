@@ -1,104 +1,10 @@
 from django import forms
 
+from src.authorization.models import CustomUser
 from src.casco.models import CarModel, Brand
-from src.osago.models import OsagoRecord
-from src.users.models import AgentSchedule
+from src.osago.models import OsagoRecord, OsagoClaim, OsagoContract
+from src.users.models import AgentSchedule, AppraiserSchedule
 
-
-# class InsuranceCalculatorForm(forms.Form):
-#     # Поля для выбора марки авто, модели авто и года выпуска
-#     brand = forms.CharField(label='Марка авто', max_length=100)
-#     model = forms.CharField(label='Модель авто', max_length=100)
-#     car_year = forms.IntegerField(label='Год выпуска', min_value=1900, max_value=2025)
-#
-#     # Поле для выбора количества лошадиных сил
-#     horse_power = forms.IntegerField(label='Лошадиные силы')
-#
-#     # Поле для выбора КО
-#     DRIVER_CHOICES = [
-#         ('one_person', 'Один человек'),
-#         ('unlimited', 'Неограниченное количество'),
-#     ]
-#     driver_option = forms.ChoiceField(label='Количество лиц допущенных к управлению', choices=DRIVER_CHOICES)
-#
-#     # Поля для записи возраста и стажа клиента
-#     age = forms.IntegerField(label='Возраст')
-#     experience = forms.IntegerField(label='Стаж')
-
-
-# class OsagoRecordForm(forms.ModelForm):
-#     number_of_drivers_choices = [
-#         ('limited', 'Ограниченный список'),
-#         ('unlimited', 'Неограниченный список')
-#     ]
-#     number_of_drivers = forms.ChoiceField(choices=number_of_drivers_choices, label="Тип списка водителей", widget=forms.RadioSelect)
-#
-#     class Meta:
-#         model = OsagoRecord
-#         fields = ['car_model', 'age', 'experience', 'number_of_drivers']
-#         widgets = {
-#             'car_model': forms.Select(attrs={'class': 'form-control'}),
-#             'age': forms.NumberInput(attrs={'class': 'form-control'}),
-#             'experience': forms.NumberInput(attrs={'class': 'form-control'}),
-#         }
-#
-#     def __init__(self, *args, **kwargs):
-#         user = kwargs.pop('user', None)
-#         super().__init__(*args, **kwargs)
-#         if user:
-#             self.instance.client = user
-#         self.fields['car_model'].queryset = CarModel.objects.all()
-#
-#     def clean(self):
-#         cleaned_data = super().clean()
-#         car_model = cleaned_data.get('car_model')
-#         age = cleaned_data.get('age')
-#         experience = cleaned_data.get('experience')
-#         number_of_drivers = cleaned_data.get('number_of_drivers')
-#
-#         kt = 1.8
-#         km = self.calculate_km(car_model.horsepower)
-#         kvs = self.calculate_kvs(age, experience)
-#         do = self.calculate_do(number_of_drivers)
-#         cc = self.calculate_cc(car_model.year)
-#         tariff = 5000
-#
-#         insurance_cost = tariff * kt * km * kvs * do * cc
-#         self.instance.insurance_cost = insurance_cost
-#
-#     def calculate_km(self, horsepower):
-#         if horsepower < 50:
-#             return 0.6
-#         elif horsepower < 70:
-#             return 1
-#         elif horsepower < 100:
-#             return 1.1
-#         elif horsepower < 120:
-#             return 1.2
-#         elif horsepower < 150:
-#             return 1.4
-#         else:
-#             return 1.6
-#
-#     def calculate_kvs(self, age, experience):
-#         if age <= 22 and experience <= 3:
-#             return 1.8
-#         elif age > 22 and experience <= 3:
-#             return 1.7
-#         elif age <= 22 and experience > 3:
-#             return 1.6
-#         else:
-#             return 1
-#
-#     def calculate_do(self, number_of_drivers_type):
-#         if number_of_drivers_type == 'limited':
-#             return 1
-#         elif number_of_drivers_type == 'unlimited':
-#             return 2
-#
-#     def calculate_cc(self, year):
-#         current_year = 2023
-#         return 1 + 0.1 * (current_year - year)
 
 class OsagoSearchForm(forms.Form):
     search_query = forms.CharField(label='Поиск', required=False)
@@ -206,3 +112,52 @@ class OsagoScheduleForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(OsagoScheduleForm, self).__init__(*args, **kwargs)
         self.fields['schedule'].queryset = AgentSchedule.objects.filter(available=True)
+
+
+class OsagoClaimForm(forms.ModelForm):
+    class Meta:
+        model = OsagoClaim
+        fields = ['description']
+
+
+class OsagoClaimScheduleForm(forms.ModelForm):
+    class Meta:
+        model = OsagoClaim
+        fields = ['availability_id']
+        widgets = {
+            'availability_id': forms.Select(attrs={'class': 'form-control'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(OsagoClaimScheduleForm, self).__init__(*args, **kwargs)
+        self.fields['availability_id'].queryset = AppraiserSchedule.objects.filter(available=True)
+
+
+class OsagoRecordAgentForm(forms.ModelForm):
+    class Meta:
+        model = OsagoRecord
+        fields = ['car_model', 'age', 'experience', 'insurance_cost', 'status', 'diagnostic_card',
+                  'cost_expertise']
+        widgets = {
+            'car_model': forms.Select(attrs={'class': 'form-control'}),
+            'age': forms.NumberInput(attrs={'class': 'form-control'}),
+            'experience': forms.NumberInput(attrs={'class': 'form-control'}),
+            'insurance_cost': forms.NumberInput(attrs={'class': 'form-control', 'readonly': 'readonly'}),
+            'status': forms.HiddenInput(),
+            'diagnostic_card': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'cost_expertise': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(OsagoRecordAgentForm, self).__init__(*args, **kwargs)
+        self.fields['status'].initial = 'in_progress'
+
+
+class OsagoContractForm(forms.ModelForm):
+    class Meta:
+        model = OsagoContract
+        fields = ['start_date', 'end_date']
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+        }

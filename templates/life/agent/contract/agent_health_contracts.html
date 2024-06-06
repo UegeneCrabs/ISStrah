@@ -1,7 +1,6 @@
 {% extends 'base_layout/layout.html' %}
 {% load static %}
 
-
 {% block styles %}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -10,97 +9,101 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
           rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <style>
-        .bodys {
+        body {
             font-family: "Montserrat", sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url("{% static 'img/health.png' %}");
+            margin: 0;
+            background: url("{% static 'img/LightCar.png' %}");
             background-size: cover;
         }
 
-        .forms-container {
-            overflow-y: auto; /* Позволяет прокручивать список, если он превышает максимальную высоту */
-            max-height: 700px;
-            background-color: #2db6fa;
+        .ui-slider-handle {
+            width: 1em;
+            height: 1em;
+            top: 50%;
+            margin-top: -.5em;
+        }
+
+        .form_calculates {
+            width: 90%;
+            margin-top: 50px;
+            padding: 35px;
+            border-radius: 25px;
+            background-color: #e1e4f5;
             box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
-            border-radius: 10px; /* Закругление углов формы */
-            margin-right: 35px;
-        }
-        .forms-container::-webkit-scrollbar {
-            width: 10px; /* Ширина скроллера */
-        }
-
-        /* Стили для полосы скроллера */
-        .forms-container::-webkit-scrollbar-thumb {
-            background-color: #888; /* Цвет полосы скроллера */
-            border-radius: 5px; /* Закругление углов полосы скроллера */
-        }
-
-        .forms-container::-webkit-scrollbar-track {
-            background-color: #f1f1f1; /* Цвет фоновой области трека скроллера */
-            border-radius: 5px; /* Закругление углов трека скроллера */
-        }
-
-        .forms {
-            width: 570px;
-            max-width: 570px; /* Ширина формы */
-            margin: 20px; /* Расстояние между элементами */
-            padding: 35px; /* Отступы вокруг содержимого формы */
-            border-radius: 10px; /* Закругление углов формы */
-            background-color: #e1e4f5; /* Цвет фона формы */
-            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
             border: #d4dcfa 1px solid;
         }
 
-
-        /* Стили для контейнера списка */
-        .payment-list-container {
-            max-height: 470px; /* Максимальная высота контейнера */
-            overflow-y: auto; /* Добавить скроллер только в случае необходимости */
-            border: 1px solid #ccc; /* Граница контейнера */
-            border-radius: 10px;
-            background-color: #e1e4f5; /* Цвет фона формы */
-            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
-            padding: 20px; /* Закругление углов контейнера */
+        .form-group {
+            margin-bottom: 15px;
         }
 
-        /* Стили для самого скроллера */
-        .payment-list-container::-webkit-scrollbar {
-            width: 10px; /* Ширина скроллера */
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            line-height: 1.25;
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
         }
 
-        /* Стили для полосы скроллера */
-        .payment-list-container::-webkit-scrollbar-thumb {
-            background-color: #888; /* Цвет полосы скроллера */
-            border-radius: 5px; /* Закругление углов полосы скроллера */
+        .form_calculate label {
+            display: block;
+            color: #000000;
+            font-size: 1rem;;
+            margin-bottom: 5px;
         }
 
-        /* Стили для трека скроллера (фоновая область) */
-        .payment-list-container::-webkit-scrollbar-track {
-            background-color: #f1f1f1; /* Цвет фоновой области трека скроллера */
-            border-radius: 5px; /* Закругление углов трека скроллера */
+        .form_calculate input[type="text"],
+        .form_calculate input[type="email"],
+        .form_calculate input[type="password"],
+        .form_calculate input[type="number"],
+        .form_calculate select,
+        .form_calculate select option {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 0;
+            background-color: #ffffff;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.875rem;
+            color: #000000;
         }
 
-        .payment-list-container table {
-            width: 100%; /* Ширина таблицы */
-            border-collapse: collapse; /* Схлопывание границ ячеек */
+        .button-center {
+            text-align: center;
+            margin-top: 40px;
         }
 
-        /* Стили для ячеек заголовков таблицы */
-        .payment-list-container th {
-            border: 1px solid #949494; /* Граница ячеек заголовков таблицы */
-            padding: 8px; /* Внутренние отступы ячеек заголовков таблицы */
-            text-align: left; /* Выравнивание текста по левому краю */
+        button {
+            background: #4154f1;
+            padding: 8px 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            color: #fff;
+            width: 100%;
         }
 
-        /* Стили для ячеек содержимого таблицы */
-        .payment-list-container td {
-            border: 1px solid #949494; /* Граница ячеек содержимого таблицы */
-            padding: 8px; /* Внутренние отступы ячеек содержимого таблицы */
-            text-align: left; /* Выравнивание текста по левому краю */
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        @media screen and (max-width: 1366px) {
+            form {
+                padding: 25px; /* Уменьшаем отступы формы для экранов ноутбуков */
+            }
         }
     </style>
 {% endblock %}
@@ -109,99 +112,51 @@
     {% include 'users/agent/header_agent.html' %}
 {% endblock %}
 
-
 {% block content %}
-
-    <div class="bodys">
-        <div class="forms-container">
-            {% for contract in contracts %}
-                <div class="forms">
-                    <p>
-                        <strong>Клиент:</strong> {{ contract.appointment.client.surname }}
-                        {{ contract.appointment.client.name }}
-                        {{ contract.appointment.client.secondname|first|upper }}.
-                    </p>
-                    <p>
-                        <strong>Участие в соревнованиях:</strong>
-                        {% if contract.appointment.participation_in_competition %}
-                            Включено
-                        {% else %}
-                            Выключено
-                        {% endif %}
-                    </p>
-                    <p><strong>Дополнительные виды спорта:</strong>
-                        {{ contract.appointment.additional_sports }}
-                    </p>
-                    <p><strong>Длительность страхования: </strong>
-                        {% if contract.appointment.duration == 1 %}
-                            1 год
-                        {% elif contract.appointment.duration == 1.2 %}
-                            6 месяцев
-                        {% elif contract.appointment.duration == 1.3 %}
-                            3 месяца
-                        {% elif contract.appointment.duration == 1.5 %}
-                            1 месяц
-                        {% else %}
-                            Нет данных
-                        {% endif %}
-                    </p>
-                    <p><strong>Возрастной коэффициент:</strong>
-                        {% if contract.appointment.age_coefficient == 1 %}
-                            От 3 до 17 лет
-                        {% elif contract.appointment.age_coefficient == 1.5 %}
-                            От 18 до 35 лет
-                        {% elif contract.appointment.age_coefficient == 1.8 %}
-                            От 36 до 65 лет
-                        {% else %}
-                            Нет данных
-                        {% endif %}
-                    </p>
-                    <p><strong>Категория спортивного покрытия:</strong>
-                        {% if contract.appointment.sport_coverage == 1.2 %}
-                            Обычный
-                        {% elif contract.appointment.sport_coverage == 1.4 %}
-                            Расширенный
-                        {% else %}
-                            Нет данных
-                        {% endif %}
-                    </p>
-                    <p><strong>Страховая сумма:</strong>
-                        {% if contract.appointment.sum_insurance == 1.1 %}
-                            100.000 рублей
-                        {% elif contract.appointment.sum_insurance == 1.3 %}
-                            250.000 рублей
-                        {% elif contract.appointment.sum_insurance == 1.5 %}
-                            500.000 рублей
-                        {% else %}
-                            Нет данных
-                        {% endif %}
-                    </p>
-                    <p><strong>Стоимость
-                        страховки:</strong> {{ contract.appointment.insurance_cost|floatformat:"1" }} рублей
-                    </p>
-                    <p><strong>Agent:</strong> {{ contract.agent }}</p>
-                    <p><strong>Date of Signing:</strong> {{ contract.date_signing }}</p>
-                </div>
-                {% if forloop.counter|divisibleby:3 %}
-                    </div>
-                    <div class="forms-container">
-                {% endif %}
-            {% endfor %}
-            </div>
-
-        <div class="payment-list-container">
-            <table>
+    <div class="form_calculates">
+        <div class="containers">
+            <h1>Договоры по страхованию жизни</h1>
+            <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>Характер повреждения</th>
-                    <th>Процент</th>
+                    <th>Агент</th>
+                    <th>Клиент</th>
+                    <th>Участие в соревнованиях</th>
+                    <th>Дополнительные виды спорта</th>
+                    <th>Длительность страхования</th>
+                    <th>Возрастной коэффициент</th>
+                    <th>Категория спортивного покрытия</th>
+                    <th>Сумма страхования</th>
+                    <th>Агент</th>
+                    <th>Дата заключения</th>
+                    <th>Начало действия договора</th>
+                    <th>Конец действия договора</th>
+                    <th>Осталось дней</th>
+                    <th>PDF</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for payment in payment_table %}
+                {% for contract in contracts %}
                     <tr>
-                        <td>{{ payment.nature_damage }}</td>
-                        <td>{{ payment.percent }}%</td>
+                        <td>{{ contract.agent.surname }} {{ contract.agent.name }} {{ contract.agent.secondname }}</td>
+                        <td>{{ contract.record.client.surname }} {{ contract.record.client.name }}
+                            {{ contract.record.client.secondname }}</td>
+                        <td>{{ contract.record.competition_participation|yesno:"Включено,Не включено" }}</td>
+                        <td>{{ contract.record.additional_sports }}</td>
+                        <td>{{ contract.record.get_insurance_duration_display }}</td>
+                        <td>{{ contract.record.get_age_coefficient_display }}</td>
+                        <td>{{ contract.record.get_sport_coverage_display }}</td>
+                        <td>{{ contract.record.get_sum_insurance_display }}</td>
+                        <td>{{ contract.agent.name }}</td>
+                        <td>{{ contract.conclusion_date }}</td>
+                        <td>{{ contract.start_date }}</td>
+                        <td>{{ contract.end_date }}</td>
+                        <td>{{ contract.days_left }}</td>
+
+                        <td>
+                            <a href="{% url 'life:generate_pdf' contract.id %}" target="_blank" class="btn btn-primary">Скачать
+                                PDF</a>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -209,4 +164,3 @@
         </div>
     </div>
 {% endblock %}
-

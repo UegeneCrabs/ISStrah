@@ -2,18 +2,29 @@ from django.contrib.auth.decorators import login_required
 
 from django.shortcuts import render
 
-from src.users.models import AgentSchedule
-from django.http import JsonResponse
+from src.casco.models import DamageTheme, CascoPayoutAssessment
+from src.life.models import DamageThemeLife, LifePayoutAssessment
+from src.osago.models import DamageThemeOsagoAuto, DamageThemeOsagoLife, OsagoAutoPayoutAssessment, \
+    OsagoLifePayoutAssessment
+from src.property.models import DamageThemeHome, HomePayoutAssessment
 
 
 @login_required
 def personal_account_client(request):
-    user = request.user
-
-    return render(request, 'users/client/p_a_client.html', {
-        'title': 'personal_account_client',
-        'user': user,
-    })
+    context = {
+        'user': request.user,
+        'home_themes': DamageThemeHome.objects.all(),
+        'home_assessments': HomePayoutAssessment.objects.all(),
+        'life_themes': DamageThemeLife.objects.all(),
+        'life_assessments': LifePayoutAssessment.objects.all(),
+        'osago_auto_themes': DamageThemeOsagoAuto.objects.all(),
+        'osago_life_themes': DamageThemeOsagoLife.objects.all(),
+        'osago_auto_assessments': OsagoAutoPayoutAssessment.objects.all(),
+        'osago_life_assessments': OsagoLifePayoutAssessment.objects.all(),
+        'casco_themes': DamageTheme.objects.all(),
+        'casco_assessments': CascoPayoutAssessment.objects.all(),
+    }
+    return render(request, 'users/client/p_a_client.html', context)
 
 
 @login_required
@@ -22,6 +33,16 @@ def personal_account_agent(request):
     return render(request, 'users/agent/p_a_agent.html', {
         'title': 'personal_account_agent',
         'user': user,
+        'home_themes': DamageThemeHome.objects.all(),
+        'home_assessments': HomePayoutAssessment.objects.all(),
+        'life_themes': DamageThemeLife.objects.all(),
+        'life_assessments': LifePayoutAssessment.objects.all(),
+        'osago_auto_themes': DamageThemeOsagoAuto.objects.all(),
+        'osago_life_themes': DamageThemeOsagoLife.objects.all(),
+        'osago_auto_assessments': OsagoAutoPayoutAssessment.objects.all(),
+        'osago_life_assessments': OsagoLifePayoutAssessment.objects.all(),
+        'casco_themes': DamageTheme.objects.all(),
+        'casco_assessments': CascoPayoutAssessment.objects.all(),
     })
 
 
@@ -32,9 +53,6 @@ def personal_account_appraiser(request):
         'title': 'personal_account_appraiser',
         'user': user,
     })
-
-
-
 
 # ---------------------------------------------------OTHER------------------------------------------------------------
 # @login_required

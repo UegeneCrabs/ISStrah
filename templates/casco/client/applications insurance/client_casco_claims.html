@@ -114,37 +114,70 @@
 {% endblock %}
 
 {% block content %}
+        <div class="form_calculates">
+
     <div class="container">
         <h1>Страховые обращения по КАСКО</h1>
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>Статус</th>
-            <th>Дата обращения</th>
-            <th>Сумма выплаты</th>
-            <th>Оценщик</th>
-            <th>Дата и время оценки</th>
-            <th>Период действия договора</th>
-            <th>Автомобиль</th>
-            <th>Год выпуска</th>
-            <th>Стоимость страховки</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for claim in claims %}
+        <table class="table table-bordered">
+            <thead>
             <tr>
-                <td>{{ claim.get_status_display|default:"-" }}</td>
-                <td>{{ claim.claim_date|date:"d.m.Y H:i" }}</td>
-                <td>{{ claim.payout_amount|default:"-" }}</td>
-                <td>{{ claim.availability_id.agent.name|default:"-" }}</td>
-                <td>{{ claim.availability_id.date|date:"d.m.Y" }} {{ claim.availability_id.time|default:"-" }}</td>
-                <td>{{ claim.insurance_contract_id.start_date|date:"d.m.Y" }} - {{ claim.insurance_contract_id.end_date|date:"d.m.Y" }}</td>
-                <td>{{ claim.insurance_contract_id.casco_record.car_model.brand.name }} {{ claim.insurance_contract_id.casco_record.car_model.model_name }} {{ claim.insurance_contract_id.casco_record.car_model.horsepower }} л.с.</td>
-                <td>{{ claim.insurance_contract_id.casco_record.car_model.year|default:"-" }}</td>
-                <td>{{ claim.insurance_contract_id.casco_record.insurance_cost|default:"-" }}</td>
+                <th>Статус</th>
+                <th>Дата обращения</th>
+                <th>Сумма выплаты</th>
+                <th>Оценщик</th>
+                <th>Период действия договора</th>
+                <th>Автомобиль</th>
+                <th>Год выпуска</th>
+                <th>Стоимость страховки</th>
+                <th>Описание</th>
+                <th>Время записи</th>
+                <th>Редактирование</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% for claim in claims %}
+                <tr>
+                    <td>{{ claim.get_status_display|default:"-" }}</td>
+                    <td>{{ claim.claim_date|date:"d.m.Y H:i" }}</td>
+                    <td>{{ claim.payout_amount|default:"-" }}</td>
+                    <td>{{ claim.availability_id.agent.name|default:"-" }}</td>
+                    <td>{{ claim.insurance_contract_id.start_date|date:"d.m.Y" }}
+                        - {{ claim.insurance_contract_id.end_date|date:"d.m.Y" }}</td>
+                    <td>{{ claim.insurance_contract_id.casco_record.car_model.brand.name }} {{ claim.insurance_contract_id.casco_record.car_model.model_name }} {{ claim.insurance_contract_id.casco_record.car_model.horsepower }}
+                        л.с.
+                    </td>
+                    <td>{{ claim.insurance_contract_id.casco_record.car_model.year|default:"-" }}</td>
+                    <td>{{ claim.insurance_contract_id.casco_record.insurance_cost|default:"-" }}</td>
+                    <td>{{ claim.description }}</td>
+                    <td>
+                        {% if claim.status == 'in_progress' %}
+                            {% if claim.availability_id %}
+                                {{ claim.availability_id.date }} {{ claim.availability_id.time }} -
+                                {{ claim.availability_id.agent.name }}
+                            {% else %}
+                                <a href="{% url 'casco:choose_appraiser_schedule' claim.id %}"
+                                   class="btn btn-warning">
+                                    Выбрать время для записи
+                                </a>
+                            {% endif %}
+                        {% elif claim.status == 'pending' %}
+                            Позже вам будет предложено время посещения
+                        {% else %}
+                            Вы посещали офис. Заявка закрыта
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if claim.status == 'pending' %}
+                            <a href="{% url 'casco:edit_casco_claim' claim.id %}" class="btn btn-warning">Редактировать
+                                заявку</a>
+                        {% else %}
+                            Редактирование не доступно
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
     </div>
 {% endblock %}

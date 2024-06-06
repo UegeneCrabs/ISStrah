@@ -32,18 +32,19 @@
         }
 
         .form_calculates {
-            width: 400px;
-            max-width: 500px;
+            width: 90%;
             margin-top: 50px;
             padding: 35px;
             border-radius: 25px;
             background-color: #e1e4f5;
-            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+            box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
             border: #d4dcfa 1px solid;
         }
+
         .form-group {
             margin-bottom: 15px;
         }
+
         .form-control {
             width: 100%;
             padding: 10px;
@@ -54,8 +55,9 @@
             background-clip: padding-box;
             border: 1px solid #ced4da;
             border-radius: 4px;
-            transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
         }
+
         .form_calculate label {
             display: block;
             color: #000000;
@@ -111,35 +113,47 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-    <h1>Договоры по КАСКО</h1>
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>Агент</th>
-            <th>Модель автомобиля</th>
-            <th>Возраст</th>
-            <th>Стаж</th>
-            <th>Стоимость страховки</th>
-            <th>Дата заключения</th>
-            <th>Начало действия договора</th>
-            <th>Конец действия договора</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for contract in contracts %}
-            <tr>
-                <td>{{ contract.agent_id }}</td>
-                <td>{{ contract.casco_record.car_model }}</td>
-                <td>{{ contract.casco_record.age }}</td>
-                <td>{{ contract.casco_record.experience }}</td>
-                <td>{{ contract.casco_record.insurance_cost }}</td>
-                <td>{{ contract.conclusion_date }}</td>
-                <td>{{ contract.start_date }}</td>
-                <td>{{ contract.end_date }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
+    <div class="form_calculates">
+
+        <div class="containers">
+            <h1>Договоры по КАСКО</h1>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Агент</th>
+                    <th>Модель автомобиля</th>
+                    <th>Возраст</th>
+                    <th>Стаж</th>
+                    <th>Стоимость страховки</th>
+                    <th>Дата заключения</th>
+                    <th>Начало действия договора</th>
+                    <th>Конец действия договора</th>
+                    <th>Осталось дней</th>
+                    <th>PDF</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for contract in contracts %}
+                    <tr>
+                        <td>{{ contract.agent_id.name }}</td>
+                        <td>{{ contract.casco_record.car_model }}</td>
+                        <td>{{ contract.casco_record.age }}</td>
+                        <td>{{ contract.casco_record.experience }}</td>
+                        <td>{{ contract.casco_record.insurance_cost }}</td>
+                        <td>{{ contract.conclusion_date }}</td>
+                        <td>{{ contract.start_date }}</td>
+                        <td>{{ contract.end_date }}</td>
+                        <td>{{ contract.days_left }}</td>
+                        
+                        <td>
+                            <a href="{% url 'casco:generate_pdf' contract.id %}" target="_blank"
+                               class="btn btn-primary">Скачать
+                                PDF</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

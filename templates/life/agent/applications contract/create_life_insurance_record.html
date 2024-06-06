@@ -1,0 +1,119 @@
+{% extends 'base_layout/layout.html' %}
+{% load static %}
+
+{% block styles %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <style>
+        body {
+            font-family: "Montserrat", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url("{% static 'img/health.png' %}");
+            background-size: cover;
+        }
+
+        .form_calculates {
+            width: 400px;
+            max-width: 500px;
+            margin-top: 50px;
+            padding: 35px;
+            border-radius: 25px;
+            background-color: #e1e4f5;
+            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+            border: #d4dcfa 1px solid;
+        }
+
+        .form_calculate label {
+            display: block;
+            color: #000000;
+            font-size: 1rem;;
+            margin-bottom: 5px;
+        }
+
+        .form_calculate input[type="text"],
+        .form_calculate input[type="email"],
+        .form_calculate input[type="password"],
+        .form_calculate input[type="number"],
+        .form_calculate select,
+        .form_calculate select option {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 0;
+            background-color: #ffffff;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.875rem;
+            color: #000000;
+        }
+
+        .button-center {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        button {
+            background: #4154f1;
+            padding: 8px 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            color: #fff;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        @media screen and (max-width: 1366px) {
+            form {
+                padding: 25px; /* Уменьшаем отступы формы для экранов ноутбуков */
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block header %}
+    {% include 'users/agent/header_agent.html' %}
+{% endblock %}
+
+{% block content %}
+    <h2>Создание записи на оформление договора страхования жизни</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Создать</button>
+    </form>
+    <script>
+        function calculateLifeInsuranceCost() {
+            let duration = parseFloat(document.getElementById('id_insurance_duration').value);
+            let age = parseFloat(document.getElementById('id_age_coefficient').value);
+            let sportCoverage = parseFloat(document.getElementById('id_sport_coverage').value);
+            let sumInsurance = parseFloat(document.getElementById('id_sum_insurance').value);
+            let competition = document.getElementById('id_competition_participation').checked;
+            let additionalSports = document.getElementById('id_additional_sports').value.split(',').length;
+            let baseRate = 500.0;
+            let competitionRate = competition ? 1.2 : 1.0;
+            let sportsRate = 1.0 + 0.1 * additionalSports;
+
+            let insuranceCost = baseRate * duration * age * sportCoverage * sumInsurance * competitionRate * sportsRate;
+            insuranceCost = Math.round(insuranceCost * 100) / 100;  // Округление до двух десятичных знаков
+
+            document.getElementById('id_insurance_cost').value = insuranceCost;
+        }
+
+        document.querySelectorAll('#id_insurance_duration, #id_age_coefficient, #id_sport_coverage, #id_sum_insurance, #id_competition_participation, #id_additional_sports')
+            .forEach(input => input.addEventListener('change', calculateLifeInsuranceCost));
+
+        window.onload = calculateLifeInsuranceCost;
+    </script>
+{% endblock %}

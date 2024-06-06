@@ -32,13 +32,12 @@
         }
 
         .form_calculates {
-            width: 400px;
-            max-width: 500px;
+            width: 90%;
             margin-top: 50px;
             padding: 35px;
             border-radius: 25px;
             background-color: #e1e4f5;
-            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+            box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
             border: #d4dcfa 1px solid;
         }
 
@@ -114,39 +113,49 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h1>Договоры по страхованию жизни</h1>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>Участие в соревнованиях</th>
-                <th>Дополнительные виды спорта</th>
-                <th>Длительность страхования</th>
-                <th>Возрастной коэффициент</th>
-                <th>Категория спортивного покрытия</th>
-                <th>Сумма страхования</th>
-                <th>Агент</th>
-                <th>Дата заключения</th>
-                <th>Начало действия договора</th>
-                <th>Конец действия договора</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for contract in contracts %}
+    <div class="form_calculates">
+        <div class="containers">
+            <h1>Договоры по страхованию жизни</h1>
+            <table class="table table-bordered">
+                <thead>
                 <tr>
-                    <td>{{ contract.record.competition_participation|yesno:"Да,Нет" }}</td>
-                    <td>{{ contract.record.additional_sports }}</td>
-                    <td>{{ contract.record.get_insurance_duration_display }}</td>
-                    <td>{{ contract.record.get_age_coefficient_display }}</td>
-                    <td>{{ contract.record.get_sport_coverage_display }}</td>
-                    <td>{{ contract.record.get_sum_insurance_display }}</td>
-                    <td>{{ contract.agent.name }}</td>
-                    <td>{{ contract.conclusion_date }}</td>
-                    <td>{{ contract.start_date }}</td>
-                    <td>{{ contract.end_date }}</td>
+                    <th>Участие в соревнованиях</th>
+                    <th>Дополнительные виды спорта</th>
+                    <th>Длительность страхования</th>
+                    <th>Возрастной коэффициент</th>
+                    <th>Категория спортивного покрытия</th>
+                    <th>Сумма страхования</th>
+                    <th>Агент</th>
+                    <th>Дата заключения</th>
+                    <th>Начало действия договора</th>
+                    <th>Конец действия договора</th>
+                    <th>Осталось дней</th>
+                    <th>PDF</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for contract in contracts %}
+                    <tr>
+                        <td>{{ contract.record.competition_participation|yesno:"Включено,Не включено" }}</td>
+                        <td>{{ contract.record.additional_sports }}</td>
+                        <td>{{ contract.record.get_insurance_duration_display }}</td>
+                        <td>{{ contract.record.get_age_coefficient_display }}</td>
+                        <td>{{ contract.record.get_sport_coverage_display }}</td>
+                        <td>{{ contract.record.get_sum_insurance_display }}</td>
+                        <td>{{ contract.agent.name }}</td>
+                        <td>{{ contract.conclusion_date }}</td>
+                        <td>{{ contract.start_date }}</td>
+                        <td>{{ contract.end_date }}</td>
+                        <td>{{ contract.days_left }}</td>
+                        
+                        <td>
+                            <a href="{% url 'life:generate_pdf' contract.id %}" target="_blank" class="btn btn-primary">Скачать
+                                PDF</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

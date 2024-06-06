@@ -11,46 +11,73 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
           rel="stylesheet">
     <style>
-        .bodys {
+        body {
             font-family: "Montserrat", sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
             background: url("{% static 'img/health.png' %}");
             background-size: cover;
         }
 
-        .forms-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around; /* Распределение элементов по ширине */
-        }
-
-        .forms {
-            width: 400px;
-            max-width: 400px; /* Ширина формы */
-            margin: 20px; /* Расстояние между элементами */
-            padding: 35px; /* Отступы вокруг содержимого формы */
-            border-radius: 25px; /* Закругление углов формы */
-            background-color: #e1e4f5; /* Цвет фона формы */
-            box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+        .form_calculates {
+            width: 70%;
+            margin-top: 50px;
+            padding: 35px;
+            border-radius: 25px;
+            background-color: #e1e4f5;
+            box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
             border: #d4dcfa 1px solid;
         }
 
-        h2 {
-            color: #000;
+        .form_calculate label {
+            display: block;
+            color: #000000;
+            font-size: 1rem;;
+            margin-bottom: 5px;
         }
 
-        .not-request {
-            width: 400px;
-            height: 110px;
-            background-color: #e1e4f5; /* Цвет фона формы */
-            box-shadow: 0 5px 10px 2px rgba(34, 60, 80, 0.2);
-            padding: 35px; /* Отступы вокруг содержимого формы */
-            border-radius: 25px; /* Закругление углов формы */
-            align-items: center;
-            justify-content: center;
+        .form_calculate input[type="text"],
+        .form_calculate input[type="email"],
+        .form_calculate input[type="password"],
+        .form_calculate input[type="number"],
+        .form_calculate select,
+        .form_calculate select option {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 0;
+            background-color: #ffffff;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 0.875rem;
+            color: #000000;
+        }
+
+        .button-center {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        button {
+            background: #4154f1;
+            padding: 8px 20px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+            color: #fff;
+            width: 100%;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        @media screen and (max-width: 1366px) {
+            form {
+                padding: 25px; /* Уменьшаем отступы формы для экранов ноутбуков */
+            }
         }
     </style>
 {% endblock %}
@@ -61,85 +88,83 @@
 
 
 {% block content %}
-    <div class="bodys">
-        <div class="forms-container">
-            {% if appointments_health %}
-                {% for ap_health in appointments_health %}
-                    <div class="forms">
-                        <p>
-                            <strong>Клиент:</strong> {{ ap_health.client.surname }} {{ ap_health.client.name }} {{ ap_health.client.secondname|first|upper }}.
-                        </p>
-                        <p><strong>Дата посещения:</strong> {{ ap_health.available.date }}</p>
-                        <p><strong>Время посещения:</strong> {{ ap_health.available.time }}</p>
-                        <p>
-                            <strong>Участие в соревнованиях:</strong>
-                            {% if ap_health.participation_in_competition %}
-                                Включено
+    <div class="form_calculates">
+
+        <div class="containers">
+            <h1>Заявки на страхование жизни</h1>
+            <form method="get" action="{% url 'life:search_request_life_insurance_agent' %}">
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Поиск</button>
+            </form>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Участие в соревнованиях</th>
+                    <th>Дополнительные виды спорта</th>
+                    <th>Длительность страхования</th>
+                    <th>Возрастной коэффициент</th>
+                    <th>Категория спортивного покрытия</th>
+                    <th>Сумма страхования</th>
+                    <th>Стоимость страховки</th>
+                    <th>Статус</th>
+                    <th>Время записи</th>
+                    <th>Редактирование</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for record in requests %}
+                    <tr>
+                        <td>{{ record.competition_participation|yesno:"Да,Нет" }}</td>
+                        <td>{{ record.additional_sports }}</td>
+                        <td>{{ record.get_insurance_duration_display }}</td>
+                        <td>{{ record.get_age_coefficient_display }}</td>
+                        <td>{{ record.get_sport_coverage_display }}</td>
+                        <td>{{ record.get_sum_insurance_display }}</td>
+                        <td>{{ record.insurance_cost }}</td>
+                        <td>{{ record.get_status_display }}</td>
+                        <td>
+                            {% if record.status == 'in_progress' %}
+                                {% if record.availability %}
+                                    {{ record.availability.date }} {{ record.availability.time }} -
+                                    {{ record.availability.agent.name }}
+                                {% endif %}
+                            {% elif record.status == 'pending' %}
+                                <a href="{% url 'osago:change_status_to_in_progress_casco' record_id=record.id %}"
+                                   onclick="return confirm('Are you sure you want to change the status to in progress?');">Перевести
+                                    в статус 'В работе'</a>
                             {% else %}
-                                Выключено
+                                Заявка закрыта
                             {% endif %}
-                        </p>
-                        <p><strong>Дополнительные виды спорта:</strong>
-                            {{ ap_health.additional_sports }}
-                        </p>
-                        <p><strong>Длительность страхования: </strong>
-                            {% if ap_health.duration == 1 %}
-                                1 год
-                            {% elif ap_health.duration == 1.2 %}
-                                6 месяцев
-                            {% elif ap_health.duration == 1.3 %}
-                                3 месяца
-                            {% elif ap_health.duration == 1.5 %}
-                                1 месяц
+                        </td>
+                        <td>
+                            {% if record.status == 'completed' %}
+                                Заявка закрыта
                             {% else %}
-                                Нет данных
+                                {% if record.availability.date < today %}
+                                    <div style="display: flex;justify-content: center;align-items: center"
+                                         class="butDel">
+                                        <a style="margin-right: 10px"
+                                           href="{% url 'life:create_life_contract' record.id %}"
+                                           class="btn btn-warning">Оформить договор</a>
+                                        <form method="post"
+                                              action="{% url 'osago:delete_osago_record_agent' record.id %}"
+                                              style="margin-top: 20px;">
+                                            {% csrf_token %}
+                                            <div class="button-center">
+                                                <button type="submit" class="btn btn-danger">Удалить запись</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                {% else %}
+                                    <a href="{% url 'life:edit_life_record_agent' record.id %}"
+                                       class="btn btn-warning">Редактировать заявку</a>
+                                {% endif %}
                             {% endif %}
-                        </p>
-                        <p><strong>Возрастной коэффициент:</strong>
-                            {% if ap_health.age_coefficient == 1 %}
-                                От 3 до 17 лет
-                            {% elif ap_health.age_coefficient == 1.5 %}
-                                От 18 до 35 лет
-                            {% elif ap_health.age_coefficient == 1.8 %}
-                                От 36 до 65 лет
-                            {% else %}
-                                Нет данных
-                            {% endif %}
-                        </p>
-                        <p><strong>Категория спортивного покрытия:</strong>
-                            {% if ap_health.sport_coverage == 1.2 %}
-                                Обычный
-                            {% elif ap_health.sport_coverage == 1.4 %}
-                                Расширенный
-                            {% else %}
-                                Нет данных
-                            {% endif %}
-                        </p>
-                        <p><strong>Страховая сумма:</strong>
-                            {% if ap_health.sum_insurance == 1.1 %}
-                                100.000 рублей
-                            {% elif ap_health.sum_insurance == 1.3 %}
-                                250.000 рублей
-                            {% elif ap_health.sum_insurance == 1.5 %}
-                                500.000 рублей
-                            {% else %}
-                                Нет данных
-                            {% endif %}
-                        </p>
-                        <p><strong>Стоимость страховки:</strong> {{ ap_health.insurance_cost|floatformat:"1" }} рублей
-                        </p>
-                        <a href="{% url 'create_contract_health' ap_health.id %}">Оформить</a>
-                    </div>
-                    {% if forloop.counter|divisibleby:3 %}
-                        </div>
-                        <div class="forms-container">
-                    {% endif %}
+                        </td>
+                    </tr>
                 {% endfor %}
-            </div>
-            {% else %}
-                <div class="not-request">
-                    <h2>Новых заявок нет</h2>
-                </div>
-            {% endif %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}

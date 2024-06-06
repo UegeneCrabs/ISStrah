@@ -1,7 +1,7 @@
 from django import forms
 
-from src.casco.models import Brand, CarModel, CascoRecord
-from src.users.models import AgentSchedule
+from src.casco.models import Brand, CarModel, CascoRecord, CascoClaim, CascoContract
+from src.users.models import AgentSchedule, AppraiserSchedule
 
 
 class CarSearchForm(forms.Form):
@@ -156,3 +156,32 @@ class CascoScheduleForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CascoScheduleForm, self).__init__(*args, **kwargs)
         self.fields['schedule'].queryset = AgentSchedule.objects.filter(available=True)
+
+
+class CascoClaimForm(forms.ModelForm):
+    class Meta:
+        model = CascoClaim
+        fields = ['description']
+
+
+class CascoContractForm(forms.ModelForm):
+    class Meta:
+        model = CascoContract
+        fields = ['casco_record', 'start_date', 'end_date']
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+
+class AppraiserScheduleForm(forms.ModelForm):
+    class Meta:
+        model = CascoClaim
+        fields = ['availability_id']
+        widgets = {
+            'availability_id': forms.Select(attrs={'class': 'form-control'})
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(AppraiserScheduleForm, self).__init__(*args, **kwargs)
+        self.fields['availability_id'].queryset = AppraiserSchedule.objects.filter(available=True)

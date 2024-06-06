@@ -10,6 +10,149 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
           rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .tabs {
+            margin-top: 100px;
+            display: flex;
+            justify-content: center;
+            background-color: #f1f1f1;
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+
+        .tabs-down {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            background-color: #f1f1f1;
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+
+        .tabs button {
+            background: none;
+            border: none;
+            padding: 14px 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        .tabs button:hover {
+            background-color: #ddd;
+        }
+
+        .tabs button.active {
+            background-color: #ccc;
+        }
+
+        .tabs-down button {
+            background: none;
+            border: none;
+            padding: 14px 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        .tabs-down button:hover {
+            background-color: #ddd;
+        }
+
+        .tabs-down button.active {
+            background-color: #ccc;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+            max-width: 90%;
+            margin: 0 auto;
+            height: fit-content;
+        }
+
+        .tab-content-down {
+            display: none;
+            padding: 20px;
+            max-width: 90%;
+            margin: 0 auto;
+            height: fit-content;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .collapsible-content {
+            display: none;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #000;
+            border-radius: 5px;
+        }
+
+        .collapsible-content table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .collapsible-content th, .collapsible-content td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .collapsible-content th {
+            background-color: #f2f2f2;
+        }
+
+        .collapsible-content-down {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #000;
+            border-radius: 5px;
+        }
+
+        .collapsible-content-down table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .collapsible-content-down th, .collapsible-content-down td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .collapsible-content-down th {
+            background-color: #f2f2f2;
+        }
+
+        h2, h3 {
+            margin: 0 0 10px;
+            cursor: pointer;
+        }
+
+        h3:hover {
+            color: #007BFF;
+        }
+
+        .theme-container {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 2px solid #29577e;
+            border-radius: 5px;
+        }
+    </style>
 {% endblock %}
 
 {% block header %}
@@ -18,157 +161,463 @@
 
 
 {% block content %}
-    <div class="payment-list">
-        <div class="firrow">
-            <div class="payment-list-container">
-                <p>КАСКО</p>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Документ</th>
-                        <th>Количество копий</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Паспорт или иной документ, удостоверяющий личность владельца автомобиля</td>
-                        <td>1 копия</td>
-                    </tr>
-                    <tr>
-                        <td>Технический паспорт автомобиля</td>
-                        <td>1 копия</td>
-                    </tr>
-                    <tr>
-                        <td>Документ, подтверждающий право собственности на автомобиль (свидетельство о праве
-                            собственности,
-                            договор купли-продажи и т. д.)
-                        </td>
-                        <td>1 копия</td>
-                    </tr>
-                    <tr>
-                        <td>Справка об отсутствии долгов по штрафам и налогам на автомобиль</td>
-                        <td>1 копия</td>
-                    </tr>
-                    <tr>
-                        <td>Документы, подтверждающие наличие систем безопасности (если применимо)</td>
-                        <td>1 копия</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="payment-list-container">
-                <p>Страхование здоровья</p>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Документ</th>
-                        <th>Количество копий</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Паспорт или иной документ, удостоверяющий личность застрахованного</td>
-                        <td>1 копия</td>
-                    </tr>
-                    <tr>
-                        <td>Свидетельство о рождении или другой документ, подтверждающий возраст застрахованного</td>
-                        <td>1 копия</td>
-                    </tr>
-                    <tr>
-                        <td>Полис обязательного медицинского страхования (если применимо)</td>
-                        <td>1 копия</td>
-                    </tr>
-                    <tr>
-                        <td>Медицинская карта или история заболеваний застрахованного</td>
-                        <td>1 копия</td>
-                    </tr>
-                    <tr>
-                        <td>Документы, подтверждающие семейное положение и иждивенцев (если применимо)</td>
-                        <td>1 копия</td>
-                    </tr>
-                    <tr>
-                        <td>Документы о доходах (если требуется для расчета страхового взноса)</td>
-                        <td>1 копия</td>
-                    </tr>
-                    <tr>
-                        <td>Другие медицинские документы или справки по запросу страховой компании</td>
-                        <td>Согласно требованию</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="tabs">
+        <button class="tab-link" onclick="openTab(event, 'osago')">ОСАГО</button>
+        <button class="tab-link" onclick="openTab(event, 'casco')">КАСКО</button>
+        <button class="tab-link" onclick="openTab(event, 'life')">Жизнь</button>
+        <button class="tab-link" onclick="openTab(event, 'home')">Квартира</button>
+    </div>
+
+    <div id="osago" class="tab-content">
+        <div class="tabs-down">
+            <button class="tab-link" onclick="showSchedule('osago-create')">Оформление ОСАГО</button>
+            <button class="tab-link" onclick="showSchedule('osago-insurance')">Оформление обращения по страховому
+                случаю
+            </button>
         </div>
-        <div class="firrow">
-            <div class="payment-list-container">
-                <p>Обращение по страховому случаю (авария)</p>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Документ</th>
-                        <th>Количество копий</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Заявление о страховом случае (заполняется в страховой компании)</td>
-                        <td>1 копия</td>
-                    </tr>
-                    <tr>
-                        <td>Протокол ДТП (полученный на месте происшествия)</td>
-                        <td>1 копия</td>
-                    </tr>
-                    <tr>
-                        <td>Копии водительского удостоверения и технического паспорта автомобиля</td>
-                        <td>1 копия каждого</td>
-                    </tr>
-                    <tr>
-                        <td>Документы о медицинской помощи (если есть травмы)</td>
-                        <td>По необходимости</td>
-                    </tr>
-                    <tr>
-                        <td>Фотографии повреждений автомобиля и места происшествия</td>
-                        <td>По необходимости</td>
-                    </tr>
-                    <tr>
-                        <td>Свидетельские показания (если есть)</td>
-                        <td>По необходимости</td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div class="raspisanie" style="margin-top: 15px">
+            <div id="osago-create" class="schedule" style="display: none">
+                <div class="theme-container">
+                    <div class="collapsible-content-down">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Документ</th>
+                                <th>Количество копий</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Паспорт или иной документ, удостоверяющий личность застрахованного</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Свидетельство о рождении или другой документ, подтверждающий возраст застрахованного
+                                </td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Полис обязательного медицинского страхования (если применимо)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Медицинская карта или история заболеваний застрахованного</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Документы, подтверждающие семейное положение и иждивенцев (если применимо)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Документы о доходах (если требуется для расчета страхового взноса)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Другие медицинские документы или справки по запросу страховой компании</td>
+                                <td>Согласно требованию</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div class="payment-list-container">
-                <p>Обращение по страховому случаю (травма)</p>
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Документ</th>
-                        <th>Количество копий</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Заявление о страховом случае (заполняется в страховой компании)</td>
-                        <td>1 копия</td>
-                    </tr>
-                    <tr>
-                        <td>Медицинская справка или иной медицинский документ, подтверждающий травму</td>
-                        <td>1 копия</td>
-                    </tr>
-                    <tr>
-                        <td>Фотографии травмы, если применимо</td>
-                        <td>По необходимости</td>
-                    </tr>
-                    <tr>
-                        <td>Другие медицинские документы и справки, по требованию страховой компании</td>
-                        <td>Согласно требованию</td>
-                    </tr>
-                    <tr>
-                        <td>Документы, подтверждающие расходы на лечение и реабилитацию</td>
-                        <td>По необходимости</td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div id="osago-insurance" class="schedule" style="display: none">
+                <div class="theme-container">
+                    <div class="collapsible-content-down">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Документ</th>
+                                <th>Количество копий</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Паспорт или иной документ, удостоверяющий личность застрахованного</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Свидетельство о рождении или другой документ, подтверждающий возраст застрахованного
+                                </td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Полис обязательного медицинского страхования (если применимо)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Медицинская карта или история заболеваний застрахованного</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Документы, подтверждающие семейное положение и иждивенцев (если применимо)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Документы о доходах (если требуется для расчета страхового взноса)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Другие медицинские документы или справки по запросу страховой компании</td>
+                                <td>Соглаdasdasdсно требованию</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+
+    <div id="casco" class="tab-content">
+        <div class="tabs-down">
+            <button class="tab-link" onclick="showSchedule('casco-create')">Оформление КАСКО</button>
+            <button class="tab-link" onclick="showSchedule('casco-insurance')">Оформление обращения по страховому
+                случаю
+            </button>
+        </div>
+        <div class="raspisanie" style="margin-top: 15px">
+            <div id="casco-create" class="schedule" style="display: none">
+                <div class="theme-container">
+                    <div class="collapsible-content-down">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Документ</th>
+                                <th>Количество копий</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Паспорт или иной документ, удостоверяющий личность застрахованного</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Свидетельство о рождении или другой документ, подтверждающий возраст застрахованного
+                                </td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Полис обязательного медицинского страхования (если применимо)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Медицинская карта или история заболеваний застрахованного</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Документы, подтверждающие семейное положение и иждивенцев (если применимо)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Документы о доходах (если требуется для расчета страхового взноса)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Другие медицинские документы или справки по запросу страховой компании</td>
+                                <td>Согласно требованию</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="casco-insurance" class="schedule" style="display: none">
+                <div class="theme-container">
+                    <div class="collapsible-content-down">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Документ</th>
+                                <th>Количество копий</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Паспорт или иной документ, удостоверяющий личность застрахованного</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Свидетельство о рождении или другой документ, подтверждающий возраст застрахованного
+                                </td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Полис обязательного медицинского страхования (если применимо)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Медицинская карта или история заболеваний застрахованного</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Документы, подтверждающие семейное положение и иждивенцев (если применимо)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Документы о доходах (если требуется для расчета страхового взноса)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Другие медицинские документы или справки по запросу страховой компании</td>
+                                <td>Соглаdasdasdсно требованию</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="life" class="tab-content">
+        <div class="tabs-down">
+            <button class="tab-link" onclick="showSchedule('life-create')">Оформление страхования жизни</button>
+            <button class="tab-link" onclick="showSchedule('life-insurance')">Оформление обращения по страховому
+                случаю
+            </button>
+        </div>
+        <div class="raspisanie" style="margin-top: 15px">
+            <div id="life-create" class="schedule" style="display: none">
+                <div class="theme-container">
+                    <div class="collapsible-content-down">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Документ</th>
+                                <th>Количество копий</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Паспорт или иной документ, удостоверяющий личность застрахованного</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Свидетельство о рождении или другой документ, подтверждающий возраст застрахованного
+                                </td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Полис обязательного медицинского страхования (если применимо)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Медицинская карта или история заболеваний застрахованного</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Документы, подтверждающие семейное положение и иждивенцев (если применимо)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Документы о доходах (если требуется для расчета страхового взноса)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Другие медицинские документы или справки по запросу страховой компании</td>
+                                <td>Согласно требованию</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="life-insurance" class="schedule" style="display: none">
+                <div class="theme-container">
+                    <div class="collapsible-content-down">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Документ</th>
+                                <th>Количество копий</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Паспорт или иной документ, удостоверяющий личность застрахованного</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Свидетельство о рождении или другой документ, подтверждающий возраст застрахованного
+                                </td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Полис обязательного медицинского страхования (если применимо)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Медицинская карта или история заболеваний застрахованного</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Документы, подтверждающие семейное положение и иждивенцев (если применимо)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Документы о доходах (если требуется для расчета страхового взноса)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Другие медицинские документы или справки по запросу страховой компании</td>
+                                <td>Соглаdasdasdсно требованию</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div id="home" class="tab-content">
+        <div class="tabs-down">
+            <button class="tab-link" onclick="showSchedule('home-create')">Оформление страхования квартиры</button>
+            <button class="tab-link" onclick="showSchedule('home-insurance')">Оформление обращения по страховому
+                случаю
+            </button>
+        </div>
+        <div class="raspisanie" style="margin-top: 15px">
+            <div id="home-create" class="schedule" style="display: none">
+                <div class="theme-container">
+                    <div class="collapsible-content-down">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Документ</th>
+                                <th>Количество копий</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Паспорт или иной документ, удостоверяющий личность застрахованного</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Свидетельство о рождении или другой документ, подтверждающий возраст застрахованного
+                                </td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Полис обязательного медицинского страхования (если применимо)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Медицинская карта или история заболеваний застрахованного</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Документы, подтверждающие семейное положение и иждивенцев (если применимо)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Документы о доходах (если требуется для расчета страхового взноса)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Другие медицинские документы или справки по запросу страховой компании</td>
+                                <td>Согласно требованию</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div id="home-insurance" class="schedule" style="display: none">
+                <div class="theme-container">
+                    <div class="collapsible-content-down">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Документ</th>
+                                <th>Количество копий</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Паспорт или иной документ, удостоверяющий личность застрахованного</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Свидетельство о рождении или другой документ, подтверждающий возраст застрахованного
+                                </td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Полис обязательного медицинского страхования (если применимо)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Медицинская карта или история заболеваний застрахованного</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Документы, подтверждающие семейное положение и иждивенцев (если применимо)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Документы о доходах (если требуется для расчета страхового взноса)</td>
+                                <td>1 копия</td>
+                            </tr>
+                            <tr>
+                                <td>Другие медицинские документы или справки по запросу страховой компании</td>
+                                <td>Соглаdasdasdсно требованию</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        function toggleCollapsible(element) {
+            var content = element.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+                var headerOffset = document.querySelector('.header').offsetHeight + 20; // 20px offset
+                var elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+                var offsetPosition = elementPosition - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+            }
+        }
+
+        document.getElementsByClassName('tab-link')[0].click(); // Открыть первую вкладку по умолчанию
+    </script>
+
+    <script>
+        function showSchedule(day) {
+            var schedules = document.querySelectorAll('.schedule');
+            for (var i = 0; i < schedules.length; i++) {
+                schedules[i].style.display = 'none';
+            }
+            document.getElementById(day).style.display = 'block';
+        }
+    </script>
 {% endblock %}

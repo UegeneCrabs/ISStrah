@@ -114,6 +114,8 @@
 {% endblock %}
 
 {% block content %}
+        <div class="form_calculates">
+
     <div class="container">
         <h1>Страховые обращения по страхованию жизни</h1>
         <table class="table table-bordered">
@@ -122,7 +124,6 @@
                 <th>Статус</th>
                 <th>Дата обращения</th>
                 <th>Сумма выплаты</th>
-                <th>Дата и время оценки</th>
                 <th>Оценщик</th>
                 <th>Период действия договора</th>
                 <th>Участие в соревнованиях</th>
@@ -132,6 +133,9 @@
                 <th>Категория спортивного покрытия</th>
                 <th>Сумма страхования</th>
                 <th>Стоимость страховки</th>
+                <th>Описание</th>
+                <th>Время записи</th>
+                <th>Редактирование</th>
             </tr>
             </thead>
             <tbody>
@@ -140,7 +144,6 @@
                     <td>{{ claim.get_status_display|default:"-" }}</td>
                     <td>{{ claim.claim_date|date:"d.m.Y H:i" }}</td>
                     <td>{{ claim.payout_amount|default:"-" }}</td>
-                    <td>{{ claim.schedule.date|date:"d.m.Y" }} {{ claim.schedule.time|default:"-" }}</td>
                     <td>{{ claim.schedule.agent|default:"-" }}</td>
                     <td>{{ claim.insurance_contract.start_date|date:"d.m.Y" }}
                         - {{ claim.insurance_contract.end_date|date:"d.m.Y" }}</td>
@@ -151,9 +154,36 @@
                     <td>{{ claim.insurance_contract.record.get_sport_coverage_display|default:"-" }}</td>
                     <td>{{ claim.insurance_contract.record.get_sum_insurance_display|default:"-" }}</td>
                     <td>{{ claim.insurance_contract.record.insurance_cost|default:"-" }}</td>
+                    <td>{{ claim.description }}</td>
+                    <td>
+                        {% if claim.status == 'in_progress' %}
+                            {% if claim.schedule %}
+                                {{ claim.schedule.date }} {{ claim.schedule.time }} -
+                                {{ claim.schedule.agent.name }}
+                            {% else %}
+                                <a href="{% url 'life:choose_health_claim_schedule' claim.id %}"
+                                   class="btn btn-warning">
+                                    Выбрать время для записи
+                                </a>
+                            {% endif %}
+                        {% elif claim.status == 'pending' %}
+                            Позже вам будет предложено время посещения
+                        {% else %}
+                            Вы посещали офис. Заявка закрыта
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if claim.status == 'pending' %}
+                            <a href="{% url 'life:edit_life_claim' claim.id %}" class="btn btn-warning">Редактировать
+                                заявку</a>
+                        {% else %}
+                            Редактирование не доступно
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+    </div>
     </div>
 {% endblock %}

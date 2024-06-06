@@ -67,10 +67,23 @@ class HomeInsuranceContract(models.Model):
         return f"Договор страхования квартиры #{self.id} от {self.start_date} до {self.end_date}"
 
 
+class DamageThemeHome(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Название тематики")
+
+    class Meta:
+        verbose_name = "Тема повреждения Квартира"
+        verbose_name_plural = "Темы повреждений Квартира"
+
+    def __str__(self):
+        return self.name
+
+
 # Оценка выплаты квартира
 class HomePayoutAssessment(models.Model):
     damage_character = models.TextField(verbose_name="Характер повреждения", unique=True)
     percentage_of_insurance_amount = models.FloatField(verbose_name="Процент от страховой суммы")
+    theme = models.ForeignKey(DamageThemeHome, null=True, blank=True, on_delete=models.CASCADE,
+                              verbose_name="Тематика повреждения")
 
     class Meta:
         verbose_name = "Оценка выплаты по страхованию квартиры"

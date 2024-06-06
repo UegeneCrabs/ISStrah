@@ -29,8 +29,6 @@
         }
 
         .form_calculates {
-            width: 400px;
-            max-width: 500px;
             margin-top: 50px;
             padding: 35px;
             border-radius: 25px;
@@ -94,66 +92,69 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h1>Мои заявки ОСАГО</h1>
-        <form method="get" action="{% url 'osago:search_request_osago' %}">
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Поиск</button>
-        </form>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>Марка</th>
-                <th>Модель</th>
-                <th>Год выпуска</th>
-                <th>Лошадиные силы</th>
-                <th>Возраст</th>
-                <th>Стаж</th>
-                <th>Стоимость страховки</th>
-                <th>Статус</th>
-                <th>Время записи</th>
-                <th>Редактирование</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for record in osago_records %}
+    <div class="form_calculates">
+
+        <div class="container">
+            <h1>Мои заявки ОСАГО</h1>
+            <form method="get" action="{% url 'osago:search_request_osago' %}">
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Поиск</button>
+            </form>
+            <table class="table table-bordered">
+                <thead>
                 <tr>
-                    <td>{{ record.car_model.brand.name }}</td>
-                    <td>{{ record.car_model.model_name }}</td>
-                    <td>{{ record.car_model.year }}</td>
-                    <td>{{ record.car_model.horsepower }}</td>
-                    <td>{{ record.age }}</td>
-                    <td>{{ record.experience }}</td>
-                    <td>{{ record.insurance_cost }}</td>
-                    <td>{{ record.get_status_display }}</td>
-                    <td>
-                        {% if record.status == 'in_progress' %}
-                            {% if record.schedule %}
-                                {{ record.schedule.date }} {{ record.schedule.time }} -
-                                {{ record.schedule.agent.name }}
-                            {% else %}
-                                <a href="{% url 'osago:schedule_osago_appointment' record.id %}"
-                                   class="btn btn-warning">
-                                    Выбрать время для записи
-                                </a>
-                            {% endif %}
-                        {% elif record.status == 'pending' %}
-                            Позже вам будет предложено время посещения
-                        {% else %}
-                            Вы посещали офис. Заявка закрыта
-                        {% endif %}
-                    </td>
-                    <td>
-                        {% if record.status == 'pending' %}
-                            <a href="{% url 'osago:edit_osago_record' record.id %}" class="btn btn-warning">Редактировать
-                                заявку</a>
-                        {% else %}
-                            Редактирование не доступно
-                        {% endif %}
-                    </td>
+                    <th>Марка</th>
+                    <th>Модель</th>
+                    <th>Год выпуска</th>
+                    <th>Лошадиные силы</th>
+                    <th>Возраст</th>
+                    <th>Стаж</th>
+                    <th>Стоимость страховки</th>
+                    <th>Статус</th>
+                    <th>Время записи</th>
+                    <th>Редактирование</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for record in osago_records %}
+                    <tr>
+                        <td>{{ record.car_model.brand.name }}</td>
+                        <td>{{ record.car_model.model_name }}</td>
+                        <td>{{ record.car_model.year }}</td>
+                        <td>{{ record.car_model.horsepower }}</td>
+                        <td>{{ record.age }}</td>
+                        <td>{{ record.experience }}</td>
+                        <td>{{ record.insurance_cost }}</td>
+                        <td>{{ record.get_status_display }}</td>
+                        <td>
+                            {% if record.status == 'in_progress' %}
+                                {% if record.schedule %}
+                                    {{ record.schedule.date }} {{ record.schedule.time }} -
+                                    {{ record.schedule.agent.name }}
+                                {% else %}
+                                    <a href="{% url 'osago:schedule_osago_appointment' record.id %}"
+                                       class="btn btn-warning">
+                                        Выбрать время для записи
+                                    </a>
+                                {% endif %}
+                            {% elif record.status == 'pending' %}
+                                Позже вам будет предложено время посещения
+                            {% else %}
+                                Вы посещали офис. Заявка закрыта
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if record.status == 'pending' %}
+                                <a href="{% url 'osago:edit_osago_record' record.id %}" class="btn btn-warning">Редактировать
+                                    заявку</a>
+                            {% else %}
+                                Редактирование не доступно
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
